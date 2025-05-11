@@ -1,103 +1,282 @@
+import Link from "next/link";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { ChevronRight, Calendar, Users, ImageIcon, Heart } from "lucide-react";
+import TestimonialCard from "@/components/testimonial-card";
+import EventCard from "@/components/event-card";
+import {
+  FadeIn,
+  StaggerContainer,
+  StaggerItem,
+  Parallax,
+} from "@/components/animations/motion";
+import { div } from "framer-motion/client";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <div className="flex flex-col min-h-screen">
+      {/* Hero Section */}
+      <section className="relative w-full h-[700px] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
+          <Parallax speed={0.2}>
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src="/hero-image.png"
+              alt="Fellowship gathering"
+              fill
+              sizes="100vw"
+              className="object-cover brightness-50"
+              priority
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </Parallax>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="absolute inset-0 bg-black/50  z-[1]" />
+        <div className="relative z-10 container mx-auto px-4 text-center text-white">
+          <FadeIn direction="down" duration={0.8}>
+            <h1 className="text-4xl md:text-6xl font-bold mb-4">
+              Building Faith, Inspiring Purpose
+            </h1>
+          </FadeIn>
+          <FadeIn direction="up" delay={0.2} duration={0.8}>
+            <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
+              Join AASTU FOCUS Fellowship in our journey of spiritual growth and
+              community service
+            </p>
+          </FadeIn>
+          <FadeIn direction="up" delay={0.4} duration={0.8}>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                asChild
+                size="lg"
+                className="bg-primary-gradient text-white hover:opacity-90"
+              >
+                <Link href="/join-us">Join Us</Link>
+              </Button>
+              <Button asChild variant="outline-white" size="lg">
+                <Link href="/about">Learn More</Link>
+              </Button>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* Welcome Message */}
+      <section className="py-16 ">
+        <div className="container mx-auto px-4 text-center">
+          <FadeIn>
+            <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary mb-4">
+              Welcome
+            </div>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Welcome to AASTU FOCUS Fellowship
+            </h2>
+          </FadeIn>
+          <FadeIn delay={0.2}>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
+              AASTU FOCUS is a Christ-centered community dedicated to fostering
+              spiritual growth, building meaningful relationships, and serving
+              our campus and community. We believe in creating a welcoming
+              environment where students can explore their faith, develop
+              leadership skills, and make a positive impact.
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.3}>
+            <Button
+              asChild
+              variant="outline"
+              className="group bg-primary-gradient text-white"
+            >
+              <Link href="/about">
+                About Us{" "}
+                <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </Button>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* Featured Content */}
+      <section className="py-16 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <FadeIn>
+              <h2 className="text-3xl font-bold mb-4">Upcoming Events</h2>
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Join us for these upcoming fellowship activities and grow
+                together in faith and community
+              </p>
+            </FadeIn>
+          </div>
+
+          <StaggerContainer>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <StaggerItem>
+                <EventCard
+                  title="Weekly Bible Study"
+                  date="Every Wednesday, 6:00 PM"
+                  location="Main Campus, Room 201"
+                  description="Join us as we study the Book of John and discover what it means to follow Jesus."
+                  imageSrc="/bible-study.png"
+                />
+              </StaggerItem>
+              <StaggerItem>
+                <EventCard
+                  title="Worship Night"
+                  date="March 25, 7:00 PM"
+                  location="Kilinto Church"
+                  description="A night of praise and worship to connect with God and each other."
+                  imageSrc="/worship-night.jpg"
+                />
+              </StaggerItem>
+              <StaggerItem>
+                <EventCard
+                  title="Break Mission"
+                  date="April 2, 9:00 AM"
+                  location="Local Community Center"
+                  description="Serving our community through various activities and sharing God's love."
+                  imageSrc="/break-mission.jpg"
+                />
+              </StaggerItem>
+            </div>
+          </StaggerContainer>
+
+          <div className="text-center mt-10">
+            <FadeIn delay={0.4}>
+              <Button asChild className="bg-primary-gradient text-white hover:opacity-90">
+                <Link href="/events">View All Events</Link>
+              </Button>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-16 ">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <FadeIn>
+              <h2 className="text-3xl font-bold mb-4">Testimonials</h2>
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Hear from our fellowship members about how AASTU FOCUS has
+                impacted their lives
+              </p>
+            </FadeIn>
+          </div>
+
+          <StaggerContainer>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <StaggerItem>
+                <TestimonialCard
+                  quote="FOCUS Fellowship has been my spiritual home away from home. I've grown so much in my faith and made lifelong friends."
+                  name="Sarah T."
+                  role="Computer Science, 3rd Year"
+                  avatarSrc="/placeholder.svg?height=100&width=100"
+                />
+              </StaggerItem>
+              <StaggerItem>
+                <TestimonialCard
+                  quote="The leadership opportunities and mentorship I've received through FOCUS have shaped me not just spiritually but professionally."
+                  name="Michael K."
+                  role="Electrical Engineering, 4th Year"
+                  avatarSrc="/placeholder.svg?height=100&width=100"
+                />
+              </StaggerItem>
+              <StaggerItem>
+                <TestimonialCard
+                  quote="As an international student, FOCUS welcomed me with open arms and helped me find community when I needed it most."
+                  name="Grace L."
+                  role="Architecture, 2nd Year"
+                  avatarSrc="/placeholder.svg?height=100&width=100"
+                />
+              </StaggerItem>
+            </div>
+          </StaggerContainer>
+        </div>
+      </section>
+
+      {/* Quick Links */}
+      <section className="py-16 bg-primary text-primary-foreground">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <FadeIn>
+              <h2 className="text-3xl font-bold mb-4">Get Involved</h2>
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <p className="max-w-2xl mx-auto opacity-90">
+                There are many ways to be part of our fellowship community
+              </p>
+            </FadeIn>
+          </div>
+
+          <StaggerContainer>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+              <StaggerItem>
+                <Link
+                  href="/events"
+                  className="flex flex-col items-center p-6 bg-primary-foreground/10 rounded-lg hover:bg-primary-foreground/20 transition-colors"
+                >
+                  <Calendar className="h-10 w-10 mb-3" />
+                  <span className="text-lg font-medium">Events</span>
+                </Link>
+              </StaggerItem>
+              <StaggerItem>
+                <Link
+                  href="/teams"
+                  className="flex flex-col items-center p-6 bg-primary-foreground/10 rounded-lg hover:bg-primary-foreground/20 transition-colors"
+                >
+                  <Users className="h-10 w-10 mb-3" />
+                  <span className="text-lg font-medium">Teams</span>
+                </Link>
+              </StaggerItem>
+              <StaggerItem>
+                <Link
+                  href="/gallery"
+                  className="flex flex-col items-center p-6 bg-primary-foreground/10 rounded-lg hover:bg-primary-foreground/20 transition-colors"
+                >
+                  <ImageIcon className="h-10 w-10 mb-3" />
+                  <span className="text-lg font-medium">Gallery</span>
+                </Link>
+              </StaggerItem>
+              <StaggerItem>
+                <Link
+                  href="/donate"
+                  className="flex flex-col items-center p-6 bg-primary-foreground/10 rounded-lg hover:bg-primary-foreground/20 transition-colors"
+                >
+                  <Heart className="h-10 w-10 mb-3" />
+                  <span className="text-lg font-medium">Donate</span>
+                </Link>
+              </StaggerItem>
+            </div>
+          </StaggerContainer>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-16 bg-muted">
+        <div className="container mx-auto px-4 text-center">
+          <FadeIn>
+            <h2 className="text-3xl font-bold mb-6">
+              Ready to Join Our Fellowship?
+            </h2>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+              Become part of a community that grows together in faith, serves
+              with love, and builds lasting friendships.
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.2}>
+            <Button asChild size="lg" className="bg-primary-gradient text-white hover:opacity-90">
+              <Link href="/join-us">Join AASTU FOCUS Today</Link>
+            </Button>
+          </FadeIn>
+        </div>
+      </section>
     </div>
   );
 }
