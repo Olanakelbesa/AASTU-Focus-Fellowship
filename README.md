@@ -1,4 +1,4 @@
-# AASTU Focus Fellowship Website
+# AASTU FOCUS Fellowship Website
 
 A modern web application for AASTU Focus Fellowship, a Christ-centered community dedicated to fostering spiritual growth, building meaningful relationships, and serving the campus and community at Addis Ababa Science and Technology University (AASTU).
 
