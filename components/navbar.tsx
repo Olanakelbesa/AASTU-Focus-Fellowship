@@ -97,7 +97,7 @@ export function Navbar() {
 
         {/* Mobile Menu Button */}
         <Button variant="ghost" size="icon" className="md:hidden" onClick={toggleMenu}>
-          {isMenuOpen ? <Cross className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          {isMenuOpen ? <Cross className="h-6 w-6 rotate-45" /> : <Menu className="h-6 w-6" />}
         </Button>
       </div>
 

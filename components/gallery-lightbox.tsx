@@ -65,9 +65,6 @@ export default function GalleryLightbox({ children, images, initialIndex }: Gall
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="max-w-5xl p-0 bg-background/95 backdrop-blur-sm">
           <div className="relative flex items-center justify-center h-[80vh]">
-            <Button variant="ghost" size="icon" className="absolute top-2 right-2 z-50" onClick={closeLightbox}>
-              <X className="h-6 w-6" />
-            </Button>
 
             <Button
               variant="ghost"

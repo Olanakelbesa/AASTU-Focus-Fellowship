@@ -1,9 +1,24 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, MapPin, Clock } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import EventRegistrationForm, {
+  RegistrationFormData,
+} from "@/components/event-registration-form";
 
 export default function EventsPage() {
   return (
@@ -168,6 +183,14 @@ function EventCard({
   event: any;
   isPast?: boolean;
 }) {
+  const [showRegistration, setShowRegistration] = useState(false);
+
+  const handleRegistrationSubmit = (data: RegistrationFormData) => {
+    // Handle form submission here
+    console.log("Registration data:", data);
+    setShowRegistration(false);
+  };
+
   return (
     <Card className="overflow-hidden h-full">
       <div className="relative h-48 w-full">
@@ -202,13 +225,69 @@ function EventCard({
         <p className="text-muted-foreground">{event.description}</p>
       </CardContent>
       <CardFooter className="px-6 pb-6 pt-0">
-        <Button
-          asChild
-          variant={isPast ? "outline" : "default"}
-          className="w-full"
-        >
-          <Link href={`/events/${event.id}`}>{"View Details"}</Link>
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant={isPast ? "outline" : "default"} className="w-full">
+              View Details
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[600px]">
+            <DialogHeader>
+              <DialogTitle className="text-2xl">{event.title}</DialogTitle>
+            </DialogHeader>
+            <div className="relative h-[300px] w-full overflow-hidden rounded-lg mb-4">
+              <Image
+                src={event.imageSrc || "/placeholder.svg"}
+                alt={event.title}
+                fill
+                className="object-cover"
+              />
+              {isPast && (
+                <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                  <span className="text-white font-medium px-3 py-1 bg-primary/80 rounded-md">
+                    Past Event
+                  </span>
+                </div>
+              )}
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-center text-muted-foreground">
+                <Calendar className="h-5 w-5 mr-2" />
+                <span>{event.date}</span>
+              </div>
+              <div className="flex items-center text-muted-foreground">
+                <Clock className="h-5 w-5 mr-2" />
+                <span>{event.time}</span>
+              </div>
+              <div className="flex items-center text-muted-foreground">
+                <MapPin className="h-5 w-5 mr-2" />
+                <span>{event.location}</span>
+              </div>
+              <div className="pt-2">
+                <h4 className="font-semibold mb-2">About this event</h4>
+                <p className="text-muted-foreground">{event.description}</p>
+              </div>
+              {!isPast && (
+                <div className="pt-4">
+                  <Button
+                    className="w-full"
+                    size="lg"
+                    onClick={() => setShowRegistration(true)}
+                  >
+                    Register for Event
+                  </Button>
+                </div>
+              )}
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        <EventRegistrationForm
+          eventTitle={event.title}
+          isOpen={showRegistration}
+          onClose={() => setShowRegistration(false)}
+          onSubmit={handleRegistrationSubmit}
+        />
       </CardFooter>
     </Card>
   );
