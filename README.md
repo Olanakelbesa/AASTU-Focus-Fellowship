@@ -1,37 +1,138 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AASTU Focus Fellowship Website
+
+A modern web application for AASTU Focus Fellowship, a Christ-centered community dedicated to fostering spiritual growth, building meaningful relationships, and serving the campus and community at Addis Ababa Science and Technology University (AASTU).
+
+## About AASTU Focus Fellowship
+
+AASTU FOCUS is a Christ-centered community dedicated to fostering spiritual growth, building meaningful relationships, and serving our campus and community. We believe in creating a welcoming environment where students can explore their faith, develop leadership skills, and make a positive impact.
+
+## Features
+
+### Core Features
+
+- 🎯 Modern and Responsive UI with Tailwind CSS
+- 🌓 Dark/Light Theme Support
+- 📱 Mobile-First Design with Responsive Navigation
+- 🎨 Beautiful UI Components using shadcn/ui
+- ⚡ Fast and Optimized Performance
+
+### Main Sections
+
+- 🏠 Home - Welcome and introduction to the fellowship
+- 📅 Events - Upcoming fellowship events and activities
+- 👥 Teams - Fellowship leadership and team members
+- 📸 Gallery - Photo gallery of fellowship activities
+- 📍 Location - Fellowship meeting locations and directions
+- 📞 Contact - Get in touch with the fellowship
+- ℹ️ About - Learn more about AASTU Focus Fellowship
+
+### Navigation & Layout
+
+- 🧭 Responsive Navigation Bar with Mobile Menu
+- 🎭 Animated UI Elements using Framer Motion
+- 🔄 Dynamic Route Handling
+- 🎯 Smooth Page Transitions
+
+### User Interface Components
+
+- 🎨 Custom Button Variants
+- 📱 Responsive Dialog System
+- 🎯 Toast Notifications
+- 📊 Form Input Components
+- 🎭 Modal and Popover Components
+- 📱 Mobile-Friendly Navigation
+- 🎨 Card Components for Content Display
+
+## Tech Stack
+
+- **Framework:** Next.js
+- **Language:** TypeScript
+- **UI Components:** shadcn/ui
+- **Styling:** Tailwind CSS
+- **Animations:** Framer Motion
+- **Icons:** Lucide Icons
+- **State Management:** React Hooks
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- Node.js (v14 or higher)
+- npm or yarn
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/aastu-focus-fellowship.git
+cd aastu-focus-fellowship
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Run the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+aastu-focus-fellowship/
+├── app/                    # Next.js app directory
+│   ├── about/             # About fellowship page
+│   ├── events/            # Events page
+│   ├── gallery/           # Photo gallery page
+│   ├── teams/             # Fellowship teams page
+│   ├── location/          # Location information page
+│   └── contact/           # Contact information page
+├── components/            # React components
+│   ├── ui/               # UI components
+│   └── navbar.tsx        # Navigation component
+├── public/               # Static assets
+├── styles/              # Global styles
+└── lib/                 # Utility functions
+```
 
-## Learn More
+## Event Registration Form
 
-To learn more about Next.js, take a look at the following resources:
+The event registration form component (`event-registration-form.tsx`) provides the following features:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Full name input with validation
+- Email validation
+- Phone number input
+- Department selection
+- Year of study selection (1st to 5th year, Masters)
+- Optional additional notes
+- Form validation
+- Responsive dialog design
+- Toast notifications for form submission
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contributing
 
-## Deploy on Vercel
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# AASTU-Focus-Fellowship
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Contact
+
+AASTU Focus Fellowship
+Project Link: [https://github.com/yourusername/aastu-focus-fellowship](https://github.com/yourusername/aastu-focus-fellowship)
