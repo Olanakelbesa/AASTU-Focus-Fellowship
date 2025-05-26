@@ -91,7 +91,7 @@ export default function JoinUsPage() {
 
       {/* Why Join */}
       {formStep === 0 && (
-        <section className="py-16">
+        <section className="py-16 px-4 md:px-10">
           <div className="container mx-auto px-4">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
@@ -163,7 +163,7 @@ export default function JoinUsPage() {
 
       {/* Membership Form */}
       {formStep === 1 && (
-        <section className="py-16">
+        <section className="py-16 px-4 md:px-10">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-8">
@@ -483,7 +483,7 @@ export default function JoinUsPage() {
 
       {/* Thank You */}
       {formStep === 2 && (
-        <section className="py-16">
+        <section className="py-16 px-4 md:px-10">
           <div className="container mx-auto px-4 text-center">
             <div className="max-w-md mx-auto">
               <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
@@ -509,7 +509,7 @@ export default function JoinUsPage() {
 
       {/* Steps to Join */}
       {formStep === 0 && (
-        <section className="py-16 bg-muted">
+        <section className="py-16 px-4 md:px-10 bg-muted">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4">How to Join</h2>
@@ -582,7 +582,7 @@ export default function JoinUsPage() {
 
       {/* FAQs */}
       {formStep === 0 && (
-        <section className="py-16">
+        <section className="py-16 px-4 md:px-10 ">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>

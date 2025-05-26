@@ -39,7 +39,7 @@ export default function GalleryPage() {
       </section>
 
       {/* Gallery Tabs */}
-      <section className="py-16">
+      <section className="py-16 px-4 md:px-10 ">
         <div className="container mx-auto px-4">
           <Tabs defaultValue="photos" className="w-full">
             <div className="flex justify-center mb-8">
@@ -131,7 +131,7 @@ export default function GalleryPage() {
       </section>
 
       {/* Featured Gallery */}
-      <section className="py-16 bg-muted">
+      <section className="py-16 px-4 md:px-10 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <FadeIn>
@@ -208,7 +208,7 @@ export default function GalleryPage() {
       </section>
 
       {/* Submit Photos */}
-      <section className="py-16">
+      <section className="py-16 px-4 md:px-10">
         <div className="container mx-auto px-4 text-center">
           <FadeIn>
             <h2 className="text-3xl font-bold mb-4">Have Photos to Share?</h2>

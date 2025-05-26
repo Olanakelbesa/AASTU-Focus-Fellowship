@@ -60,7 +60,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form and Info */}
-      <section className="py-16">
+      <section className="py-16 px-4 md:px-10">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12">
             {!isSubmitted ? (
@@ -250,7 +250,7 @@ export default function ContactPage() {
       </section>
 
       {/* Map */}
-      <section className="py-16 bg-muted">
+      <section className="py-16 px-4 md:px-10 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold mb-4">Find Us on Campus</h2>

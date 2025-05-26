@@ -46,7 +46,7 @@ export default function EventsPage() {
       </section>
 
       {/* Events Tabs */}
-      <section className="py-16">
+      <section className="py-16 px-10">
         <div className="container mx-auto px-4">
           <Tabs defaultValue="upcoming" className="w-full">
             <div className="flex justify-center mb-8">
@@ -122,7 +122,7 @@ export default function EventsPage() {
       </section>
 
       {/* Event Categories */}
-      <section className="py-16 bg-muted">
+      <section className="py-16 px-10 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Event Categories</h2>
@@ -157,7 +157,7 @@ export default function EventsPage() {
       </section>
 
       {/* Event Registration */}
-      <section className="py-16">
+      <section className="py-16 px-10">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">
             Want to Register for an Event?

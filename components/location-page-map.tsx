@@ -77,7 +77,7 @@ export default function LocationPageMap({
 
       <div className="flex justify-center">
         <Button asChild className="flex items-center gap-2">
-          <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">
+          <a href={"https://www.google.com/maps/dir/?api=1&origin=8.887550587108628,38.809970887108214&destination=8.891263711200805,38.799113629416546"} target="_blank" rel="noopener noreferrer">
             <Navigation className="h-4 w-4" /> Get Directions
           </a>
         </Button>

@@ -29,7 +29,7 @@ export default function Home() {
             />
           </Parallax>
         </div>
-        <div className="absolute inset-0 bg-black/50  z-[1]" />
+        <div className="absolute inset-0 dark:bg-black/50  z-[1]" />
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
           <FadeIn direction="down" duration={0.8}>
             <h1 className="text-4xl md:text-6xl font-bold mb-4">
@@ -97,7 +97,7 @@ export default function Home() {
       </section>
 
       {/* Featured Content */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-16 bg-muted/30 px-10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <FadeIn>
@@ -154,7 +154,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 ">
+      <section className="py-16 px-10 ">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <FadeIn>

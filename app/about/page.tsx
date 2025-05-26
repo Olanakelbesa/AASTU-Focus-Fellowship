@@ -41,7 +41,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission and Vision */}
-      <section className="py-16">
+      <section className="py-16 px-10">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <FadeIn direction="right">
@@ -93,7 +93,7 @@ export default function AboutPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 bg-primary-gradient text-primary-foreground">
+      <section className="py-12 px-10 bg-primary-gradient text-primary-foreground">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div className="p-4">
@@ -131,7 +131,7 @@ export default function AboutPage() {
       </section>
 
       {/* Core Values */}
-      <section className="py-16 bg-muted">
+      <section className="py-16 px-10 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <FadeIn>
@@ -211,7 +211,7 @@ export default function AboutPage() {
       </section>
 
       {/* History */}
-      <section className="py-16">
+      <section className="py-16 px-10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <FadeIn>

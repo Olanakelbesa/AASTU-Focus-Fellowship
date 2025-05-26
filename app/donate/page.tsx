@@ -63,7 +63,7 @@ export default function DonatePage() {
       </section>
 
       {/* Donation Form */}
-      <section className="py-16">
+      <section className="py-16 px-4 md:px-10">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12">
             <div>
@@ -387,7 +387,7 @@ export default function DonatePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 bg-muted">
+      <section className="py-16 px-4 md:px-10 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">The Impact of Your Support</h2>
@@ -443,7 +443,7 @@ export default function DonatePage() {
       </section>
 
       {/* Other Ways to Give */}
-      <section className="py-16">
+      <section className="py-16 px-4 md:px-10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Other Ways to Support</h2>
@@ -502,7 +502,7 @@ export default function DonatePage() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-16 bg-primary-gradient text-primary-foreground">
+      <section className="py-16 px-4 md:px-10 bg-primary-gradient text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Make a Difference Today</h2>
           <p className="text-lg opacity-90 max-w-2xl mx-auto mb-8">

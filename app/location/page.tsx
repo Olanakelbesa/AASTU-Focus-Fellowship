@@ -1,11 +1,24 @@
-import Link from "next/link"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations/motion"
-import LocationPageMap from "@/components/location-page-map"
-import { MapPin, Bus, Car, Train, Clock, Phone, Mail, Navigation } from "lucide-react"
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  FadeIn,
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/animations/motion";
+import LocationPageMap from "@/components/location-page-map";
+import {
+  MapPin,
+  Bus,
+  Car,
+  Train,
+  Clock,
+  Phone,
+  Mail,
+  Navigation,
+} from "lucide-react";
 
 export default function LocationPage() {
   return (
@@ -14,26 +27,29 @@ export default function LocationPage() {
       <section className="bg-muted py-12 md:py-20">
         <div className="container mx-auto px-4 text-center">
           <FadeIn>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Location</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              Our Location
+            </h1>
           </FadeIn>
           <FadeIn delay={0.1}>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Find us on campus and get directions to our fellowship meetings and events
+              Find us on campus and get directions to our fellowship meetings
+              and events
             </p>
           </FadeIn>
         </div>
       </section>
 
       {/* Main Map Section */}
-      <section className="py-16">
+      <section className="py-16 px-4 md:px-10">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8">
             <div className="md:col-span-2">
               <FadeIn>
                 <LocationPageMap
-                  latitude={8.8883}
-                  longitude={38.7759}
-                  markerTitle="AASTU FOCUS Fellowship - Student Center, Room 105"
+                  latitude={8.891263711200805}
+                  longitude={38.799113629416546}
+                  markerTitle="AASTU FOCUS Fellowship - Christian Student Fellowship Location"
                   height="500px"
                 />
               </FadeIn>
@@ -48,9 +64,15 @@ export default function LocationPage() {
                       <div className="flex gap-3">
                         <MapPin className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
                         <div>
-                          <p className="font-medium">Student Center, Room 105</p>
-                          <p className="text-muted-foreground">Addis Ababa Science and Technology University</p>
-                          <p className="text-muted-foreground">Addis Ababa, Ethiopia</p>
+                          <p className="font-medium">
+                            Student Center, Room 105
+                          </p>
+                          <p className="text-muted-foreground">
+                            Addis Ababa Science and Technology University
+                          </p>
+                          <p className="text-muted-foreground">
+                            Addis Ababa, Ethiopia
+                          </p>
                         </div>
                       </div>
 
@@ -58,9 +80,15 @@ export default function LocationPage() {
                         <Clock className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
                         <div>
                           <p className="font-medium">Office Hours</p>
-                          <p className="text-muted-foreground">Monday - Friday: 10:00 AM - 4:00 PM</p>
-                          <p className="text-muted-foreground">Saturday: Closed</p>
-                          <p className="text-muted-foreground">Sunday: 2:00 PM - 5:00 PM</p>
+                          <p className="text-muted-foreground">
+                            Monday - Friday: 10:00 AM - 4:00 PM
+                          </p>
+                          <p className="text-muted-foreground">
+                            Saturday: Closed
+                          </p>
+                          <p className="text-muted-foreground">
+                            Sunday: 2:00 PM - 5:00 PM
+                          </p>
                         </div>
                       </div>
 
@@ -69,7 +97,10 @@ export default function LocationPage() {
                         <div>
                           <p className="font-medium">Phone</p>
                           <p className="text-muted-foreground">
-                            <a href="tel:+251911234567" className="hover:text-primary">
+                            <a
+                              href="tel:+251911234567"
+                              className="hover:text-primary"
+                            >
                               +251 911 234 567
                             </a>
                           </p>
@@ -81,7 +112,10 @@ export default function LocationPage() {
                         <div>
                           <p className="font-medium">Email</p>
                           <p className="text-muted-foreground">
-                            <a href="mailto:contact@aastufocus.org" className="hover:text-primary">
+                            <a
+                              href="mailto:contact@aastufocus.org"
+                              className="hover:text-primary"
+                            >
                               contact@aastufocus.org
                             </a>
                           </p>
@@ -96,7 +130,7 @@ export default function LocationPage() {
                 <div className="flex flex-col gap-3">
                   <Button asChild className="flex items-center gap-2">
                     <a
-                      href="https://www.google.com/maps/dir/?api=1&destination=8.8883,38.7759"
+                      href="https://www.google.com/maps/dir/?api=1&origin=8.887550587108628,38.809970887108214&destination=8.891263711200805,38.799113629416546"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -114,7 +148,7 @@ export default function LocationPage() {
       </section>
 
       {/* Transportation Options */}
-      <section className="py-16 bg-muted">
+      <section className="py-16 px-4 md:px-10 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <FadeIn>
@@ -122,7 +156,8 @@ export default function LocationPage() {
             </FadeIn>
             <FadeIn delay={0.1}>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Multiple transportation options are available to reach our location
+                Multiple transportation options are available to reach our
+                location
               </p>
             </FadeIn>
           </div>
@@ -155,11 +190,19 @@ export default function LocationPage() {
                           <h3 className="text-xl font-bold">Bus Routes</h3>
                         </div>
                         <ul className="space-y-2 text-muted-foreground">
-                          <li>• Route 35: Megenagna to AASTU (Stop: Main Gate)</li>
-                          <li>• Route 42: Piazza to AASTU (Stop: Science Building)</li>
-                          <li>• Route 18: Mexico Square to AASTU (Stop: Library)</li>
+                          <li>
+                            • Route 35: Megenagna to AASTU (Stop: Main Gate)
+                          </li>
+                          <li>
+                            • Route 42: Piazza to AASTU (Stop: Science Building)
+                          </li>
+                          <li>
+                            • Route 18: Mexico Square to AASTU (Stop: Library)
+                          </li>
                         </ul>
-                        <p className="mt-4 text-sm">Buses run every 15-20 minutes during weekdays.</p>
+                        <p className="mt-4 text-sm">
+                          Buses run every 15-20 minutes during weekdays.
+                        </p>
                       </CardContent>
                     </Card>
                   </StaggerItem>
@@ -174,9 +217,12 @@ export default function LocationPage() {
                           <h3 className="text-xl font-bold">Light Rail</h3>
                         </div>
                         <p className="text-muted-foreground mb-2">
-                          Take the East-West Line to Ayat Station, then transfer to Bus Route 35 to AASTU.
+                          Take the East-West Line to Ayat Station, then transfer
+                          to Bus Route 35 to AASTU.
                         </p>
-                        <p className="text-muted-foreground">The light rail runs from 6:00 AM to 10:00 PM daily.</p>
+                        <p className="text-muted-foreground">
+                          The light rail runs from 6:00 AM to 10:00 PM daily.
+                        </p>
                       </CardContent>
                     </Card>
                   </StaggerItem>
@@ -186,7 +232,8 @@ export default function LocationPage() {
               <div className="bg-card border rounded-lg p-6">
                 <h3 className="font-bold text-lg mb-2">Taxi Services</h3>
                 <p className="text-muted-foreground mb-4">
-                  Ride-sharing and taxi services are readily available throughout Addis Ababa.
+                  Ride-sharing and taxi services are readily available
+                  throughout Addis Ababa.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex items-center gap-3">
@@ -199,7 +246,9 @@ export default function LocationPage() {
                     />
                     <div>
                       <p className="font-medium">Ride</p>
-                      <p className="text-sm text-muted-foreground">Local ride-sharing app</p>
+                      <p className="text-sm text-muted-foreground">
+                        Local ride-sharing app
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -212,7 +261,9 @@ export default function LocationPage() {
                     />
                     <div>
                       <p className="font-medium">ZayRide</p>
-                      <p className="text-sm text-muted-foreground">Taxi booking service</p>
+                      <p className="text-sm text-muted-foreground">
+                        Taxi booking service
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -227,22 +278,31 @@ export default function LocationPage() {
                     <div>
                       <p className="font-medium">From City Center:</p>
                       <ol className="list-decimal list-inside space-y-1 text-muted-foreground ml-4">
-                        <li>Head east on Churchill Avenue toward Ras Mekonnen Avenue</li>
+                        <li>
+                          Head east on Churchill Avenue toward Ras Mekonnen
+                          Avenue
+                        </li>
                         <li>Continue onto Jomo Kenyatta Street</li>
                         <li>Turn right onto Africa Avenue (Bole Road)</li>
-                        <li>Continue for 5 km, then turn left onto Ring Road</li>
+                        <li>
+                          Continue for 5 km, then turn left onto Ring Road
+                        </li>
                         <li>After 3 km, turn right at the AASTU sign</li>
                         <li>Follow campus signs to the Student Center</li>
                       </ol>
                     </div>
 
                     <div>
-                      <p className="font-medium">From Bole International Airport:</p>
+                      <p className="font-medium">
+                        From Bole International Airport:
+                      </p>
                       <ol className="list-decimal list-inside space-y-1 text-muted-foreground ml-4">
                         <li>Exit the airport and head west on Airport Road</li>
                         <li>Continue onto Africa Avenue (Bole Road)</li>
                         <li>After 7 km, turn left onto Ring Road</li>
-                        <li>Continue for 3 km, then turn right at the AASTU sign</li>
+                        <li>
+                          Continue for 3 km, then turn right at the AASTU sign
+                        </li>
                         <li>Follow campus signs to the Student Center</li>
                       </ol>
                     </div>
@@ -252,26 +312,41 @@ export default function LocationPage() {
 
               <div className="bg-card border rounded-lg p-6">
                 <h3 className="font-bold text-lg mb-2">Parking Information</h3>
-                <p className="text-muted-foreground mb-4">Free parking is available in the following areas:</p>
+                <p className="text-muted-foreground mb-4">
+                  Free parking is available in the following areas:
+                </p>
                 <ul className="space-y-2 text-muted-foreground">
-                  <li>• Student Center Parking Lot (closest to our location)</li>
+                  <li>
+                    • Student Center Parking Lot (closest to our location)
+                  </li>
                   <li>• Main Campus Parking Area (5-minute walk)</li>
-                  <li>• Visitor Parking by the Administration Building (7-minute walk)</li>
+                  <li>
+                    • Visitor Parking by the Administration Building (7-minute
+                    walk)
+                  </li>
                 </ul>
                 <p className="mt-4 text-sm text-muted-foreground">
-                  Note: Parking can fill up quickly during weekdays. We recommend arriving early.
+                  Note: Parking can fill up quickly during weekdays. We
+                  recommend arriving early.
                 </p>
               </div>
             </TabsContent>
 
             <TabsContent value="campus" className="space-y-6">
               <div className="relative h-[300px] rounded-lg overflow-hidden mb-6">
-                <Image src="/placeholder.svg?height=300&width=800" alt="Campus map" fill className="object-cover" />
+                <Image
+                  src="/placeholder.svg?height=300&width=800"
+                  alt="Campus map"
+                  fill
+                  className="object-cover"
+                />
               </div>
 
               <Card>
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-bold mb-4">Walking Directions from Campus Landmarks</h3>
+                  <h3 className="text-xl font-bold mb-4">
+                    Walking Directions from Campus Landmarks
+                  </h3>
                   <div className="space-y-4">
                     <div>
                       <p className="font-medium">From the Main Library:</p>
@@ -279,18 +354,28 @@ export default function LocationPage() {
                         <li>Exit the library and turn right</li>
                         <li>Walk past the Science Building</li>
                         <li>The Student Center will be on your left</li>
-                        <li>Enter through the main doors and go to Room 105 on the first floor</li>
+                        <li>
+                          Enter through the main doors and go to Room 105 on the
+                          first floor
+                        </li>
                         <li>Approximate walking time: 5 minutes</li>
                       </ul>
                     </div>
 
                     <div>
-                      <p className="font-medium">From the Engineering Building:</p>
+                      <p className="font-medium">
+                        From the Engineering Building:
+                      </p>
                       <ul className="list-disc list-inside text-muted-foreground ml-4">
                         <li>Exit the Engineering Building and head south</li>
                         <li>Cross the central plaza</li>
-                        <li>The Student Center is directly across from the plaza</li>
-                        <li>Enter through the main doors and go to Room 105 on the first floor</li>
+                        <li>
+                          The Student Center is directly across from the plaza
+                        </li>
+                        <li>
+                          Enter through the main doors and go to Room 105 on the
+                          first floor
+                        </li>
                         <li>Approximate walking time: 7 minutes</li>
                       </ul>
                     </div>
@@ -298,10 +383,17 @@ export default function LocationPage() {
                     <div>
                       <p className="font-medium">From the Dormitories:</p>
                       <ul className="list-disc list-inside text-muted-foreground ml-4">
-                        <li>Exit the dormitory area and follow the main pathway</li>
+                        <li>
+                          Exit the dormitory area and follow the main pathway
+                        </li>
                         <li>Pass the cafeteria on your right</li>
-                        <li>Continue straight until you reach the Student Center</li>
-                        <li>Enter through the main doors and go to Room 105 on the first floor</li>
+                        <li>
+                          Continue straight until you reach the Student Center
+                        </li>
+                        <li>
+                          Enter through the main doors and go to Room 105 on the
+                          first floor
+                        </li>
                         <li>Approximate walking time: 10 minutes</li>
                       </ul>
                     </div>
@@ -314,14 +406,16 @@ export default function LocationPage() {
       </section>
 
       {/* Nearby Landmarks */}
-      <section className="py-16">
+      <section className="py-16 px-4 md:px-10  ">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <FadeIn>
               <h2 className="text-3xl font-bold mb-4">Nearby Landmarks</h2>
             </FadeIn>
             <FadeIn delay={0.1}>
-              <p className="text-muted-foreground max-w-2xl mx-auto">Helpful reference points around our location</p>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Helpful reference points around our location
+              </p>
             </FadeIn>
           </div>
 
@@ -338,9 +432,12 @@ export default function LocationPage() {
                     />
                   </div>
                   <CardContent className="p-6">
-                    <h3 className="font-bold text-lg mb-2">University Library</h3>
+                    <h3 className="font-bold text-lg mb-2">
+                      University Library
+                    </h3>
                     <p className="text-muted-foreground text-sm">
-                      The large modern building with glass facade. We're a 5-minute walk southwest from here.
+                      The large modern building with glass facade. We're a
+                      5-minute walk southwest from here.
                     </p>
                   </CardContent>
                 </Card>
@@ -359,7 +456,8 @@ export default function LocationPage() {
                   <CardContent className="p-6">
                     <h3 className="font-bold text-lg mb-2">Main Cafeteria</h3>
                     <p className="text-muted-foreground text-sm">
-                      The busy dining hall with outdoor seating area. We're directly across the plaza.
+                      The busy dining hall with outdoor seating area. We're
+                      directly across the plaza.
                     </p>
                   </CardContent>
                 </Card>
@@ -376,9 +474,12 @@ export default function LocationPage() {
                     />
                   </div>
                   <CardContent className="p-6">
-                    <h3 className="font-bold text-lg mb-2">Administration Building</h3>
+                    <h3 className="font-bold text-lg mb-2">
+                      Administration Building
+                    </h3>
                     <p className="text-muted-foreground text-sm">
-                      The tall building with the university flag. We're a 7-minute walk northeast from here.
+                      The tall building with the university flag. We're a
+                      7-minute walk northeast from here.
                     </p>
                   </CardContent>
                 </Card>
@@ -389,11 +490,13 @@ export default function LocationPage() {
       </section>
 
       {/* Weekly Meeting Schedule */}
-      <section className="py-16 bg-muted">
+      <section className="py-16 px-4 md:px-10  ">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <FadeIn>
-              <h2 className="text-3xl font-bold mb-4">Weekly Meeting Schedule</h2>
+              <h2 className="text-3xl font-bold mb-4">
+                Weekly Meeting Schedule
+              </h2>
             </FadeIn>
             <FadeIn delay={0.1}>
               <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -407,8 +510,12 @@ export default function LocationPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x">
                 <div className="p-6">
                   <h3 className="font-bold text-lg mb-2">Bible Study</h3>
-                  <p className="text-primary font-medium mb-1">Wednesdays, 6:00 PM</p>
-                  <p className="text-muted-foreground text-sm mb-2">Student Center, Room 105</p>
+                  <p className="text-primary font-medium mb-1">
+                    Wednesdays, 6:00 PM
+                  </p>
+                  <p className="text-muted-foreground text-sm mb-2">
+                    Student Center, Room 105
+                  </p>
                   <p className="text-sm text-muted-foreground">
                     Weekly study of Scripture with discussion and application.
                   </p>
@@ -416,16 +523,28 @@ export default function LocationPage() {
 
                 <div className="p-6">
                   <h3 className="font-bold text-lg mb-2">Prayer Meeting</h3>
-                  <p className="text-primary font-medium mb-1">Mondays, 7:30 AM</p>
-                  <p className="text-muted-foreground text-sm mb-2">Student Center, Room 105</p>
-                  <p className="text-sm text-muted-foreground">Start your week with prayer and fellowship.</p>
+                  <p className="text-primary font-medium mb-1">
+                    Mondays, 7:30 AM
+                  </p>
+                  <p className="text-muted-foreground text-sm mb-2">
+                    Student Center, Room 105
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Start your week with prayer and fellowship.
+                  </p>
                 </div>
 
                 <div className="p-6">
                   <h3 className="font-bold text-lg mb-2">Worship Night</h3>
-                  <p className="text-primary font-medium mb-1">Fridays, 7:00 PM</p>
-                  <p className="text-muted-foreground text-sm mb-2">University Auditorium</p>
-                  <p className="text-sm text-muted-foreground">Evening of praise, worship, and community.</p>
+                  <p className="text-primary font-medium mb-1">
+                    Fridays, 7:00 PM
+                  </p>
+                  <p className="text-muted-foreground text-sm mb-2">
+                    University Auditorium
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Evening of praise, worship, and community.
+                  </p>
                 </div>
               </div>
             </div>
@@ -447,8 +566,8 @@ export default function LocationPage() {
           </FadeIn>
           <FadeIn delay={0.1}>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-              We'd love to welcome you to our fellowship. Join us at any of our weekly gatherings or contact us for more
-              information.
+              We'd love to welcome you to our fellowship. Join us at any of our
+              weekly gatherings or contact us for more information.
             </p>
           </FadeIn>
           <FadeIn delay={0.2}>
@@ -464,5 +583,5 @@ export default function LocationPage() {
         </div>
       </section>
     </div>
-  )
+  );
 }
