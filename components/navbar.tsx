@@ -4,15 +4,26 @@ import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Cross, Menu } from "lucide-react"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Cross, Menu, Settings, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { useAuth } from "@/lib/auth/auth-context"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
+  const { user, logout, isAuthenticated, isAdmin } = useAuth()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -87,17 +98,54 @@ export function Navbar() {
 
         <div className="hidden md:flex items-center gap-4">
           <ThemeToggle />
-          <Button asChild variant="outline" >
-            <Link href="/donate">Donate</Link>
-          </Button>
-          <Button asChild className="bg-primary-gradient text-white hover:opacity-90">
-            <Link href="/join-us">Join Us</Link>
-          </Button>
+
+          {isAuthenticated ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={user?.avatar || "/placeholder.svg"} alt={user?.name} />
+                    <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end" forceMount>
+                <DropdownMenuLabel className="font-normal">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium leading-none">{user?.name}</p>
+                    <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {isAdmin && (
+                  <DropdownMenuItem asChild>
+                    <Link href="/admin">
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Admin Dashboard</span>
+                    </Link>
+                  </DropdownMenuItem>
+                )}
+                <DropdownMenuItem onClick={logout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <Button variant="outline" asChild>
+                <Link href="/donate">Donate</Link>
+              </Button>
+              <Button asChild>
+                <Link href="/login">Sign In</Link>
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
         <Button variant="ghost" size="icon" className="md:hidden" onClick={toggleMenu}>
-          {isMenuOpen ? <Cross className="h-6 w-6 rotate-45" /> : <Menu className="h-6 w-6" />}
+          {isMenuOpen ? <Cross className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </Button>
       </div>
 
@@ -135,17 +183,54 @@ export function Navbar() {
               </Link>
             </motion.div>
           ))}
+
           <div className="flex flex-col gap-2 mt-4 pt-4 border-t">
-            <Button asChild variant="outline" className="w-full">
-              <Link href="/donate" onClick={toggleMenu}>
-                Donate
-              </Link>
-            </Button>
-            <Button asChild className="w-full">
-              <Link href="/join-us" onClick={toggleMenu}>
-                Join Us
-              </Link>
-            </Button>
+            {isAuthenticated ? (
+              <>
+                <div className="flex items-center gap-3 p-2">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={user?.avatar || "/placeholder.svg"} alt={user?.name} />
+                    <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p className="text-sm font-medium">{user?.name}</p>
+                    <p className="text-xs text-muted-foreground">{user?.role}</p>
+                  </div>
+                </div>
+                {isAdmin && (
+                  <Button asChild variant="outline" className="w-full">
+                    <Link href="/admin" onClick={toggleMenu}>
+                      <Settings className="h-4 w-4 mr-2" />
+                      Admin Dashboard
+                    </Link>
+                  </Button>
+                )}
+                <Button
+                  variant="ghost"
+                  className="w-full"
+                  onClick={() => {
+                    logout()
+                    toggleMenu()
+                  }}
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button asChild variant="outline" className="w-full">
+                  <Link href="/donate" onClick={toggleMenu}>
+                    Donate
+                  </Link>
+                </Button>
+                <Button asChild className="w-full">
+                  <Link href="/login" onClick={toggleMenu}>
+                    Sign In
+                  </Link>
+                </Button>
+              </>
+            )}
             <div className="flex justify-center mt-4">
               <ThemeToggle />
             </div>

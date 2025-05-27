@@ -65,10 +65,10 @@ export default function LocationPage() {
                         <MapPin className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
                         <div>
                           <p className="font-medium">
-                            Student Center, Room 105
+                            AASTU FOCUS FELLOWSHIP
                           </p>
                           <p className="text-muted-foreground">
-                            Addis Ababa Science and Technology University
+                            Akaki Quality 1/3
                           </p>
                           <p className="text-muted-foreground">
                             Addis Ababa, Ethiopia
@@ -79,15 +79,9 @@ export default function LocationPage() {
                       <div className="flex gap-3">
                         <Clock className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
                         <div>
-                          <p className="font-medium">Office Hours</p>
+                          <p className="font-medium">Worship Hours</p>
                           <p className="text-muted-foreground">
-                            Monday - Friday: 10:00 AM - 4:00 PM
-                          </p>
-                          <p className="text-muted-foreground">
-                            Saturday: Closed
-                          </p>
-                          <p className="text-muted-foreground">
-                            Sunday: 2:00 PM - 5:00 PM
+                            Friday: 06:00 PM - 09:00 PM
                           </p>
                         </div>
                       </div>
@@ -98,10 +92,10 @@ export default function LocationPage() {
                           <p className="font-medium">Phone</p>
                           <p className="text-muted-foreground">
                             <a
-                              href="tel:+251911234567"
+                              href="tel:+251949434281"
                               className="hover:text-primary"
                             >
-                              +251 911 234 567
+                              +251949434281
                             </a>
                           </p>
                         </div>
@@ -116,7 +110,7 @@ export default function LocationPage() {
                               href="mailto:contact@aastufocus.org"
                               className="hover:text-primary"
                             >
-                              contact@aastufocus.org
+                              aastufocusofficail2012@gmail.com
                             </a>
                           </p>
                         </div>

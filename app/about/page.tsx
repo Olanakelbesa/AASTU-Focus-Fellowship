@@ -322,8 +322,8 @@ export default function AboutPage() {
           <div className="max-w-4xl mx-auto">
             <FadeIn delay={0.2}>
               <AboutPageMap
-                latitude={8.8883}
-                longitude={38.7759}
+                latitude={8.891263711200805}
+                longitude={38.799113629416546}
                 markerTitle="AASTU FOCUS Fellowship - Student Center, Room 105"
               />
             </FadeIn>
@@ -380,18 +380,18 @@ export default function AboutPage() {
           <Tabs defaultValue="executive" className="w-full">
             <div className="flex justify-center mb-8">
               <TabsList>
-                <TabsTrigger value="executive">Executive Team</TabsTrigger>
-                <TabsTrigger value="ministry">Ministry Leaders</TabsTrigger>
+                <TabsTrigger value="executive">Main Leader</TabsTrigger>
+                <TabsTrigger value="ministry">Team Leaders</TabsTrigger>
                 <TabsTrigger value="advisors">Faculty Advisors</TabsTrigger>
               </TabsList>
             </div>
 
-            <TabsContent value="executive" className="space-y-8">
+            <TabsContent value="executive" className="space-y-8 px-10">
               <StaggerContainer>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   <StaggerItem>
                     <LeaderCard
-                      name="David Mulugeta"
+                      name="Abdi Takele"
                       role="President"
                       bio="Computer Science, 4th Year. David has been with FOCUS since his freshman year and is passionate about building community."
                       imageSrc="/worship.jpg"
@@ -399,7 +399,7 @@ export default function AboutPage() {
                   </StaggerItem>
                   <StaggerItem>
                     <LeaderCard
-                      name="Sarah Abebe"
+                      name="Hayu Rabira"
                       role="Vice President"
                       bio="Electrical Engineering, 3rd Year. Sarah oversees our ministry teams and helps coordinate major events."
                       imageSrc="/worship.jpg"
@@ -407,7 +407,7 @@ export default function AboutPage() {
                   </StaggerItem>
                   <StaggerItem>
                     <LeaderCard
-                      name="Michael Tesfaye"
+                      name="Naol Wandimu"
                       role="Secretary"
                       bio="Business Administration, 3rd Year. Michael manages communications and keeps our fellowship organized."
                       imageSrc="/worship.jpg"
@@ -415,7 +415,7 @@ export default function AboutPage() {
                   </StaggerItem>
                   <StaggerItem>
                     <LeaderCard
-                      name="Ruth Girma"
+                      name="Moti Tesfaye"
                       role="Treasurer"
                       bio="Accounting, 4th Year. Ruth manages our finances and fundraising efforts with integrity and skill."
                       imageSrc="/worship.jpg"

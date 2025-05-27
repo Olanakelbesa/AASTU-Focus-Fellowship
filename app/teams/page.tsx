@@ -53,8 +53,8 @@ export default function TeamsPage() {
             </p>
           </div>
 
-          <Tabs defaultValue="worship" className="w-full">
-            <div className="flex justify-center mb-8 overflow-x-auto pb-2">
+          <Tabs defaultValue="worship" className="w-full pb-10">
+            <div className="flex justify-center mb-8  pb-2">
               <TabsList className="flex-wrap justify-center">
                 <TabsTrigger
                   value="worship"
@@ -95,7 +95,7 @@ export default function TeamsPage() {
               </TabsList>
             </div>
 
-            <TabsContent value="worship" className="space-y-8">
+            <TabsContent value="worship" className="space-y-8 pt-16 lg:pt-2">
               <TeamSection
                 name="Worship Team"
                 description="Our worship team leads the fellowship in praise and worship during our gatherings, creating an atmosphere for encountering God."
@@ -116,7 +116,7 @@ export default function TeamsPage() {
               />
             </TabsContent>
 
-            <TabsContent value="outreach" className="space-y-8">
+            <TabsContent value="outreach" className="space-y-8 pt-16 lg:pt-2">
               <TeamSection
                 name="Outreach Team"
                 description="The outreach team coordinates our community service projects and evangelistic efforts, helping us share God's love with our campus and community."
@@ -137,7 +137,7 @@ export default function TeamsPage() {
               />
             </TabsContent>
 
-            <TabsContent value="bible-study" className="space-y-8">
+            <TabsContent value="bible-study" className="space-y-8 pt-16 lg:pt-2">
               <TeamSection
                 name="Bible Study Team"
                 description="The Bible study team develops and leads our Bible studies, helping members grow in their understanding of Scripture and application to daily life."
@@ -158,7 +158,7 @@ export default function TeamsPage() {
               />
             </TabsContent>
 
-            <TabsContent value="prayer" className="space-y-8">
+            <TabsContent value="prayer" className="space-y-8 pt-16 lg:pt-2">
               <TeamSection
                 name="Prayer Team"
                 description="The prayer team leads our prayer initiatives, interceding for our campus, community, and fellowship members."
@@ -179,7 +179,7 @@ export default function TeamsPage() {
               />
             </TabsContent>
 
-            <TabsContent value="welcome" className="space-y-8">
+            <TabsContent value="welcome" className="space-y-8 pt-16 lg:pt-2">
               <TeamSection
                 name="Welcome Team"
                 description="The welcome team ensures that everyone who attends our events feels welcomed, connected, and included in our fellowship community."
@@ -200,7 +200,7 @@ export default function TeamsPage() {
               />
             </TabsContent>
 
-            <TabsContent value="media" className="space-y-8">
+            <TabsContent value="media" className="space-y-8 pt-16 lg:pt-2">
               <TeamSection
                 name="Media Team"
                 description="The media team handles our online presence, photography, videography, and technical needs for events and gatherings."

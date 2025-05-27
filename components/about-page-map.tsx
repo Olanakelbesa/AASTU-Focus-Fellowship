@@ -17,28 +17,14 @@ export default function AboutPageMap({
   markerTitle = "Our Location",
   height = "400px",
 }: AboutPageMapProps) {
-  const [showMap, setShowMap] = useState(false)
 
-  const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`
+  const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=8.887550587108628,38.809970887108214&destination=8.891263711200805,38.799113629416546`
   const googleMapsEmbedUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${latitude},${longitude}&zoom=15`
 
   return (
     <div className="space-y-4">
       <div className="w-full rounded-lg overflow-hidden border border-border relative bg-muted/50" style={{ height }}>
-        {/* Static Map Placeholder */}
-        {!showMap && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <MapPin className="h-12 w-12 text-primary mb-4" />
-            <h3 className="text-lg font-medium mb-1">{markerTitle}</h3>
-            <p className="text-muted-foreground text-sm mb-4">Student Center, Room 105</p>
-            <Button onClick={() => setShowMap(true)} className="flex items-center gap-2">
-              Show Map
-            </Button>
-          </div>
-        )}
-
         {/* Google Maps Embed when user clicks */}
-        {showMap && (
           <iframe
             src={googleMapsEmbedUrl}
             width="100%"
@@ -49,7 +35,6 @@ export default function AboutPageMap({
             referrerPolicy="no-referrer-when-downgrade"
             title="Google Maps"
           ></iframe>
-        )}
       </div>
 
       <div className="flex justify-center">
