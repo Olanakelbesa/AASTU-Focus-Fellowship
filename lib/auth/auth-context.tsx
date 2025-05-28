@@ -27,7 +27,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 const mockUsers: (User & { password: string })[] = [
   {
     id: "1",
-    name: "David Mulugeta",
+    name: "Olana Kelbesa",
     email: "admin@aastufocus.org",
     password: "admin123",
     role: "admin",
