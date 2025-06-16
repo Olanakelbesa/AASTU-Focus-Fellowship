@@ -19,26 +19,14 @@ import {
   Mail,
   Navigation,
 } from "lucide-react";
+import { Banner } from "@/components/banner";
 
 export default function LocationPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
-      <section className="bg-muted py-12 md:py-20">
-        <div className="container mx-auto px-4 text-center">
-          <FadeIn>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Our Location
-            </h1>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Find us on campus and get directions to our fellowship meetings
-              and events
-            </p>
-          </FadeIn>
-        </div>
-      </section>
+      <Banner title="Our Location" subTitle="Find us on campus and get directions to our fellowship meetings
+              and events"/>
 
       {/* Main Map Section */}
       <section className="py-16 px-4 md:px-10">

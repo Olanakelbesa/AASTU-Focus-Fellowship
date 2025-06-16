@@ -10,35 +10,14 @@ import {
   CountUp,
 } from "@/components/animations/motion";
 import AboutPageMap from "@/components/about-page-map";
+import { Banner } from "@/components/banner";
 
 export default function AboutPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
-      <section className="relative w-full h-[300px] md:h-[400px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src="/events.png"
-            alt="About AASTU FOCUS Fellowship"
-            fill
-            sizes="100vw"
-            className="object-cover brightness-50"
-            priority
-          />
-        </div>
-        <div className="absolute inset-0 bg-black/50 z-[1]" />
-        <div className="relative z-10 container mx-auto px-4 text-center text-white">
-          <FadeIn>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">About Us</h1>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <p className="text-lg max-w-2xl mx-auto">
-              Learn more about AASTU FOCUS Fellowship, our mission, vision, and
-              the people who make it happen.
-            </p>
-          </FadeIn>
-        </div>
-      </section>
+      <Banner title="About Us" subTitle="Learn more about AASTU FOCUS Fellowship, our mission, vision, and
+              the people who make it happen."/>
 
       {/* Mission and Vision */}
       <section className="py-16 px-10">

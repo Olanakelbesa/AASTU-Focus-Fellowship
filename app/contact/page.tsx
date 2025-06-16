@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { toast } from "@/hooks/use-toast"
 import { Mail, Phone, MapPin, Clock, Facebook, Instagram, Twitter, Youtube, CheckCircle2 } from "lucide-react"
+import { Banner } from "@/components/banner"
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -50,14 +51,7 @@ export default function ContactPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
-      <section className="bg-muted py-12 md:py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Have questions or want to get in touch? We'd love to hear from you!
-          </p>
-        </div>
-      </section>
+      <Banner title="Contact Us" subTitle="Have questions or want to get in touch? We'd love to hear from you!"/>
 
       {/* Contact Form and Info */}
       <section className="py-16 px-4 md:px-10">

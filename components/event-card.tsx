@@ -28,7 +28,7 @@ export default function EventCard({
 }: EventCardProps) {
   return (
     <ScaleOnHover scale={1.03}>
-      <Card className="overflow-hidden h-full transition-shadow duration-300 hover:shadow-lg dark-mode-transition">
+      <Card className="border-gray-50 overflow-hidden h-full transition-shadow duration-300 hover:shadow-lg dark-mode-transition">
         <div className="relative h-48 w-full overflow-hidden">
           <Image
             src={imageSrc || "/placeholder.svg"}

@@ -1,54 +1,65 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Eye, EyeOff, Loader2, AlertCircle } from "lucide-react"
-import { useAuth } from "@/lib/auth/auth-context"
+import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Eye, EyeOff, Loader2, AlertCircle } from "lucide-react";
+import { useAuth } from "@/lib/auth/auth-context";
+import Link from "next/link";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [error, setError] = useState("")
-  const { login, isLoading } = useAuth()
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const redirectTo = searchParams.get("redirect") || "/"
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const { login, isLoading } = useAuth();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/";
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
+    e.preventDefault();
+    setError("");
 
     if (!email || !password) {
-      setError("Please fill in all fields")
-      return
+      setError("Please fill in all fields");
+      return;
     }
 
-    const success = await login(email, password)
+    const success = await login(email, password);
 
     if (success) {
       // Redirect will be handled by the auth guard
-      router.push(redirectTo)
+      router.push(redirectTo);
     } else {
-      setError("Invalid email or password")
+      setError("Invalid email or password");
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-muted/30 px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">
-            <span className="text-primary">AASTU</span> FOCUS
+            <Link href={"/"}>
+              <span className="text-primary">AASTU</span> FOCUS
+            </Link>
           </CardTitle>
-          <CardDescription>Sign in to access the fellowship portal</CardDescription>
+          <CardDescription>
+            Sign in to access the fellowship portal
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -131,5 +142,5 @@ export default function LoginForm() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

@@ -19,31 +19,14 @@ import { useState } from "react";
 import EventRegistrationForm, {
   RegistrationFormData,
 } from "@/components/event-registration-form";
+import { Banner } from "@/components/banner";
 
 export default function EventsPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
-      <section className="relative w-full h-[300px] md:h-[400px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src="/events.png"
-            alt="Fellowship events"
-            fill
-            sizes="100vw"
-            className="object-cover brightness-50"
-            priority
-          />
-        </div>
-        <div className="absolute inset-0 bg-black/50 z-[1]" />
-        <div className="relative z-10 container mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Events</h1>
-          <p className="text-lg max-w-2xl mx-auto">
-            Join us for fellowship, worship, Bible study, and community service
-            events throughout the year.
-          </p>
-        </div>
-      </section>
+      <Banner title="Events" subTitle="Join us for fellowship, worship, Bible study, and community service
+            events throughout the year."/>
 
       {/* Events Tabs */}
       <section className="py-16 px-10">

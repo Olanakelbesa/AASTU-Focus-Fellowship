@@ -14,6 +14,8 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { toast } from "@/hooks/use-toast"
 import { CheckCircle2 } from "lucide-react"
+import worship from "@/public/worship.jpg"
+import { Banner } from "@/components/banner"
 
 export default function JoinUsPage() {
   const [formStep, setFormStep] = useState(0)
@@ -80,14 +82,7 @@ export default function JoinUsPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
-      <section className="bg-muted py-12 md:py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Join Us</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Become part of our fellowship community and grow in faith, friendship, and purpose
-          </p>
-        </div>
-      </section>
+      <Banner title="Join Us" subTitle="Become part of our fellowship community and grow in faith, friendship, and purpose."/>
 
       {/* Why Join */}
       {formStep === 0 && (
@@ -150,7 +145,7 @@ export default function JoinUsPage() {
               </div>
               <div className="relative h-[500px] rounded-lg overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=500&width=600"
+                  src={worship}
                   alt="Fellowship gathering"
                   fill
                   className="object-cover"

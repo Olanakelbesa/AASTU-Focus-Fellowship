@@ -20,10 +20,11 @@
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
+    --border: 220 47% 97%;
     --input: 214.3 31.8% 91.4%;
     --ring: 28 65% 34%;
     --radius: 0.5rem;
+    --banner-bg: #f1f5f9;
   }
 
   .dark {
@@ -43,9 +44,10 @@
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
+    --border: 222 47% 11%;
     --input: 217.2 32.6% 17.5%;
     --ring: 33 57% 64%;
+    --banner-bg: 222 47% 11%; 
   }
 }
 
@@ -118,5 +120,8 @@ html {
 
 .dark .border-primary-gradient {
   border-image: linear-gradient(to right, #a05f24, #e0b27a) 1;
+  }
+  .banner-bg {
+    @apply bg-[hsl(var(--banner-bg))];
   }
 }

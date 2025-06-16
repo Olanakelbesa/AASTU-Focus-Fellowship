@@ -12,35 +12,17 @@ import {
   Megaphone,
 } from "lucide-react";
 import { FadeIn } from "@/components/animations/motion";
+import { Banner } from "@/components/banner";
 
 export default function TeamsPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
-      <section className="relative w-full h-[300px] md:h-[400px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src="/events.png"
-            alt="About AASTU FOCUS Fellowship"
-            fill
-            sizes="100vw"
-            className="object-cover brightness-50"
-            priority
-          />
-        </div>
-        <div className="absolute inset-0 bg-black/50 z-[1]" />
-        <div className="relative z-10 container mx-auto px-4 text-center text-white">
-          <FadeIn>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Teams</h1>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <p className="text-lg max-w-2xl mx-auto">
-              Discover the different ministry teams that make our fellowship
-              thrive and find where you can serve
-            </p>
-          </FadeIn>
-        </div>
-      </section>
+      <Banner
+        title="Our Teams"
+        subTitle="Discover the different ministry teams that make our fellowship
+              thrive and find where you can serve."
+      />
 
       {/* Teams Overview */}
       <section className="py-16 px-4 md:px-10">
@@ -137,7 +119,10 @@ export default function TeamsPage() {
               />
             </TabsContent>
 
-            <TabsContent value="bible-study" className="space-y-8 pt-16 lg:pt-2">
+            <TabsContent
+              value="bible-study"
+              className="space-y-8 pt-16 lg:pt-2"
+            >
               <TeamSection
                 name="Bible Study Team"
                 description="The Bible study team develops and leads our Bible studies, helping members grow in their understanding of Scripture and application to daily life."

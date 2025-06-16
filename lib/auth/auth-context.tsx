@@ -28,8 +28,8 @@ const mockUsers: (User & { password: string })[] = [
   {
     id: "1",
     name: "Olana Kelbesa",
-    email: "admin@aastufocus.org",
-    password: "admin123",
+    email: "olana@gmail.com",
+    password: "olana123",
     role: "admin",
     avatar: "/placeholder.svg?height=40&width=40",
   },

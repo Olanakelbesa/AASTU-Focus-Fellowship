@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { toast } from "@/hooks/use-toast"
 import { Heart, BookOpen, Users, Church, GraduationCap, Globe } from "lucide-react"
+import { Banner } from "@/components/banner"
 
 export default function DonatePage() {
   const [donationAmount, setDonationAmount] = useState("")
@@ -53,14 +54,7 @@ export default function DonatePage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
-      <section className="bg-muted py-12 md:py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Support Our Fellowship</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Your generous donations help us continue our mission of building a Christ-centered community on campus
-          </p>
-        </div>
-      </section>
+      <Banner title="Support Our Fellowship" subTitle="Your generous donations help us continue our mission of building a Christ-centered community on campus."/>
 
       {/* Donation Form */}
       <section className="py-16 px-4 md:px-10">
