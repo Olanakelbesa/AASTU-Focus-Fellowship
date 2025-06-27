@@ -11,12 +11,13 @@ import {
   Parallax,
 } from "@/components/animations/motion";
 import { div } from "framer-motion/client";
+import HeroSection from "@/components/hero-section";
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative w-full h-[700px] flex items-center justify-center overflow-hidden">
+      {/* <section className="relative w-full h-[700px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Parallax speed={0.2}>
             <Image
@@ -57,7 +58,8 @@ export default function Home() {
             </div>
           </FadeIn>
         </div>
-      </section>
+      </section> */}
+      <HeroSection/>
 
       {/* Welcome Message */}
       <section className="py-16 ">
