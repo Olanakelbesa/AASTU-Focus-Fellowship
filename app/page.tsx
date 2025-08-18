@@ -17,52 +17,10 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      {/* <section className="relative w-full h-[700px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <Parallax speed={0.2}>
-            <Image
-              src="/hero-image.png"
-              alt="Fellowship gathering"
-              fill
-              sizes="100vw"
-              className="object-cover brightness-50"
-              priority
-            />
-          </Parallax>
-        </div>
-        <div className="absolute inset-0 dark:bg-black/50  z-[1]" />
-        <div className="relative z-10 container mx-auto px-4 text-center text-white">
-          <FadeIn direction="down" duration={0.8}>
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              Building Faith, Inspiring Purpose
-            </h1>
-          </FadeIn>
-          <FadeIn direction="up" delay={0.2} duration={0.8}>
-            <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
-              Join AASTU FOCUS Fellowship in our journey of spiritual growth and
-              community service
-            </p>
-          </FadeIn>
-          <FadeIn direction="up" delay={0.4} duration={0.8}>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                asChild
-                size="lg"
-                className="bg-primary-gradient text-white hover:opacity-90"
-              >
-                <Link href="/join-us">Join Us</Link>
-              </Button>
-              <Button asChild variant="outline-white" size="lg">
-                <Link href="/about">Learn More</Link>
-              </Button>
-            </div>
-          </FadeIn>
-        </div>
-      </section> */}
       <HeroSection/>
 
       {/* Welcome Message */}
-      <section className="py-16 ">
+      <section className="py-16  ">
         <div className="container mx-auto px-4 text-center">
           <FadeIn>
             <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary mb-4">

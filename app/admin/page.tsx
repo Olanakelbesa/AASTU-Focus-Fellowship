@@ -37,7 +37,7 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-6">
       {/* Welcome Section */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between ">
         <div>
           <h1 className="text-3xl font-bold">Welcome back, David!</h1>
           <p className="text-muted-foreground">Here's what's happening with your fellowship today.</p>

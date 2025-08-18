@@ -129,7 +129,7 @@ export default function LoginForm() {
             <h4 className="font-medium text-sm mb-2">Demo Credentials:</h4>
             <div className="space-y-1 text-xs text-muted-foreground">
               <div>
-                <strong>Admin:</strong> admin@aastufocus.org / admin123
+                <strong>Admin:</strong> olana@gmail.com / olana123
               </div>
               <div>
                 <strong>Team Leader:</strong> daniel@aastufocus.org / leader123
