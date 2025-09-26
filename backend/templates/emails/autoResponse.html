@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Received - AASTU Focus Fellowship</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        .content {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 0 0 8px 8px;
+        }
+        .message-box {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 12px;
+        }
+        .social-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .social-links a {
+            margin: 0 10px;
+            color: #667eea;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Thank You!</h1>
+        <p>AASTU Focus Fellowship</p>
+    </div>
+    
+    <div class="content">
+        <h2>Hello {{name}},</h2>
+        
+        <p>Thank you for reaching out to us! We have received your message and appreciate you taking the time to contact AASTU Focus Fellowship.</p>
+        
+        <div class="message-box">
+            <h3>Your Message:</h3>
+            <p><strong>Subject:</strong> {{subject}}</p>
+            <p><strong>Message:</strong> {{message}}</p>
+            <p><strong>Reference ID:</strong> {{reference}}</p>
+        </div>
+        
+        <p>Our team will review your message and get back to you within <strong>24-48 hours</strong>. We typically respond to:</p>
+        <ul>
+            <li><strong>Urgent inquiries:</strong> Within 24 hours</li>
+            <li><strong>General questions:</strong> Within 48 hours</li>
+            <li><strong>Weekend messages:</strong> Next business day</li>
+        </ul>
+        
+        <p>If you have any urgent matters, please don't hesitate to reach out to us directly.</p>
+        
+        <div class="social-links">
+            <a href="#">🌐 Website</a>
+            <a href="#">📱 Social Media</a>
+            <a href="#">📞 Phone</a>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p><strong>AASTU Focus Fellowship</strong></p>
+        <p>Building community, sharing faith, making a difference</p>
+        <p>Sent on {{currentDate}}</p>
+    </div>
+</body>
+</html>

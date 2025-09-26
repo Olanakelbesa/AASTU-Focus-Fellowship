@@ -1,0 +1,115 @@
+// controllers/webhookController.js
+import Donation from '../models/Donation.js';
+import chapaService from '../services/chapaService.js';
+import crypto from 'crypto';
+
+export const handleChapaWebhook = async (req, res) => {
+  try {
+    const { tx_ref, status, transaction_id, amount, currency } = req.body;
+
+    console.log('Received webhook:', { tx_ref, status, transaction_id });
+
+    // Verify webhook signature (if Chapa provides it)
+    const signature = req.headers['chapa-signature'];
+    if (signature && !verifyWebhookSignature(req.body, signature)) {
+      console.error('Invalid webhook signature');
+      return res.status(400).send('Invalid signature');
+    }
+
+    // Find donation by tx_ref
+    const donation = await Donation.findById(tx_ref);
+    if (!donation) {
+      console.error('Donation not found:', tx_ref);
+      return res.status(404).send('Donation not found');
+    }
+
+    // Verify payment with Chapa API
+    try {
+      const verification = await chapaService.verifyPayment(transaction_id);
+      
+      if (verification.data.status === 'success') {
+        // Update donation status
+        donation.paymentStatus = 'completed';
+        donation.transactionId = transaction_id;
+        donation.receiptSent = true;
+        donation.receiptSentAt = new Date();
+        
+        await donation.save();
+        
+        console.log(`Payment completed for donation ${tx_ref}`);
+        
+        // Here you can add additional logic:
+        // - Send email receipt
+        // - Update campaign totals
+        // - Send notification to admin
+        // - Process recurring donation if applicable
+        
+      } else {
+        donation.paymentStatus = 'failed';
+        await donation.save();
+        console.log(`Payment failed for donation ${tx_ref}`);
+      }
+      
+    } catch (verificationError) {
+      console.error('Payment verification failed:', verificationError);
+      donation.paymentStatus = 'failed';
+      await donation.save();
+    }
+
+    res.status(200).send('OK');
+
+  } catch (error) {
+    console.error('Webhook processing error:', error);
+    res.status(500).send('Webhook processing failed');
+  }
+};
+
+function verifyWebhookSignature(payload, signature) {
+  try {
+    const expectedSignature = crypto
+      .createHmac('sha256', process.env.WEBHOOK_SECRET)
+      .update(JSON.stringify(payload))
+      .digest('hex');
+    
+    return crypto.timingSafeEqual(
+      Buffer.from(signature),
+      Buffer.from(expectedSignature)
+    );
+  } catch (error) {
+    console.error('Signature verification error:', error);
+    return false;
+  }
+}
+
+export const testWebhook = async (req, res) => {
+  try {
+    const { donationId } = req.params;
+    
+    const donation = await Donation.findById(donationId);
+    if (!donation) {
+      return res.status(404).json({
+        success: false,
+        message: 'Donation not found'
+      });
+    }
+
+    // Simulate webhook payload
+    const webhookPayload = {
+      tx_ref: donation._id.toString(),
+      status: 'success',
+      transaction_id: 'test_transaction_123',
+      amount: donation.amount.toString(),
+      currency: donation.currency
+    };
+
+    // Process webhook
+    await handleChapaWebhook({ body: webhookPayload }, res);
+
+  } catch (error) {
+    console.error('Test webhook error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Test webhook failed'
+    });
+  }
+};
