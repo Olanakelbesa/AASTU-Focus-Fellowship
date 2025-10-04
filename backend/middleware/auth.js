@@ -1,13 +1,28 @@
 import User from '../models/User.js';
 import { verifyToken } from '../utils/jwtUtils.js';
 
+// Security enhancement for auth endpoints
+export const addSecurityHeaders = (req, res, next) => {
+  // Add additional security headers
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+};
+
 
 export const verifyJWT = async (req, res, next) => {
   try {
     let token;
 
+    // Check Authorization header first
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
       token = req.headers.authorization.split(' ')[1];
+    }
+    // Check cookies as fallback
+    else if (req.cookies && req.cookies.access_token) {
+      token = req.cookies.access_token;
     }
 
     if (!token) {
@@ -44,6 +59,8 @@ export const verifyJWT = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
+    // Enhanced error logging
+    console.error('JWT verification error:', error);
     return res.status(401).json({
       success: false,
       message: 'Invalid token.'

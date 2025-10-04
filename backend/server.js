@@ -23,7 +23,22 @@ connectDB();
 
 const app = express();
 
-app.use(helmet());
+app.use(helmet({
+  hsts: {
+    maxAge: 31536000,
+    includeSubDomains: true,
+    preload: true
+  },
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"],
+    }
+  },
+  crossOriginEmbedderPolicy: false
+}));
 
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
@@ -41,14 +56,34 @@ const limiter = rateLimit({
   }
 });
 
-app.use('/api/auth', rateLimit({
-  windowMs: 15 * 60 * 1000, 
-  max: 20, 
-  message: {
-    success: false,
-    message: 'Too many authentication attempts, please try again later.'
-  }
-}));
+// Enhanced rate limiting for auth endpoints
+// app.use('/api/auth', rateLimit({
+//   windowMs: 15 * 60 * 1000,  // 15 minutes 
+//   max: 10,   // Strict limit: 5 auth attempts per 15 min
+//   message: {
+//     success: false,
+//     message: 'Too many authentication attempts, please try again later.'
+//   },
+//   standardHeaders: true,
+//   legacyHeaders: false,
+//   handler: function (req, res) {
+//     res.status(429).json({
+//       success: false,
+//       message: 'Too many login attempts from this IP, please try again later.',
+//       retryAfter: Math.round(req.rateLimit.resetTime / 1000) || 15 * 60
+//     });
+//   }
+// }));
+
+// Additional rate limit for sensitive endpoints
+// app.use('/api/auth/refresh-token', rateLimit({
+//   windowMs: 5 * 60 * 1000,   // 5 minutes
+//   max: 10,   // 10 refresh requests per 5 min  
+//   message: {
+//     success: false,
+//     message: 'Too many refresh token requests.'
+//   }
+// }));
 
 
 app.use('/api', limiter);

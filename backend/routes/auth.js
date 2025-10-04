@@ -46,6 +46,15 @@ router.get(
   }),
   async (req, res) => {
     try {
+      // Verify CSRF state parameter
+      const stateFromRequest = req.query.state;
+      const stateFromSession = req.session?.googleOAuthState;
+      
+      if (!stateFromRequest || !stateFromSession || stateFromRequest !== stateFromSession) {
+        console.error('Google OAuth: Invalid CSRF state parameter');
+        return res.redirect(`${process.env.CLIENT_URL || "http://localhost:3000"}?auth=csrf_failed`);
+      }
+
       // Validate req.user exists
       if (!req.user) {
         console.error('Google OAuth: No user in request');

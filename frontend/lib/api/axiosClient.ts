@@ -20,6 +20,8 @@ axiosClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     if (!config.headers) config.headers = new axios.AxiosHeaders();
     config.headers.Authorization = `Bearer ${token}`;
   }
+  // Include credentials for cookie-based authentication
+  config.withCredentials = true;
   return config;
 });
 
@@ -37,13 +39,17 @@ axiosClient.interceptors.response.use(
     ) {
       (originalRequest as any)._retry = true;
       try {
-        // Attempt to refresh token
+        // Attempt to refresh token using cookies
         const refreshResponse = await axios.post(
           apiRoutes.auth.refreshToken,
           {},
-          { baseURL: API_CONFIG.BASE_URL }
+          {
+            baseURL: API_CONFIG.BASE_URL,
+            withCredentials: true,
+          }
         );
-        const newToken = refreshResponse.data?.data?.token;
+        const newToken =
+          refreshResponse.data?.token || refreshResponse.data?.data?.token;
         if (newToken) {
           TokenManager.setToken(newToken);
           if (!originalRequest.headers)
@@ -52,6 +58,7 @@ axiosClient.interceptors.response.use(
           return axiosClient(originalRequest);
         }
       } catch (refreshError) {
+        console.error("Token refresh failed:", refreshError);
         TokenManager.removeToken();
         if (typeof window !== "undefined") {
           window.location.href = "/login";

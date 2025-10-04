@@ -6,7 +6,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -16,10 +15,15 @@ import {
 } from "@/components/ui/select";
 import GoogleIcon from "../ui/googleIcon";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAuthError, selectIsAuthenticated } from "@/lib/redux/authSlice/selector";
+import {
+  selectAuthError,
+  selectIsAuthenticated,
+  selectIsRegistered,
+} from "@/lib/redux/authSlice/selector";
 import { registerRequest } from "@/lib/redux/authSlice";
 import ErrorHandler from "@/lib/utils/errorHandler";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff, Loader } from "lucide-react";
 
 // List of departments for autocomplete
 const departments = [
@@ -46,32 +50,33 @@ export default function SignUpForm() {
     yearOfStudy: "1",
     phone: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
-  const route = useRouter()
+  const router = useRouter();
 
-  const dispatch = useDispatch()
-  const isAuthenticated = useSelector(selectIsAuthenticated)
+  const dispatch = useDispatch();
+  const isRegistered = useSelector(selectIsRegistered);
   const isLoading = useSelector(selectIsAuthenticated);
-  const error = useSelector(selectAuthError)
+  const error = useSelector(selectAuthError);
 
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
+  useEffect(() => {
+    if (isRegistered) {
+      router.push("/login");
+    }
+  }, [isRegistered, router]);
+
   const handleSignup = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
-      dispatch(registerRequest(formData))
+      dispatch(registerRequest(formData));
     } catch (error) {
       ErrorHandler.handleReduxError(error as string, "SIGNUP");
     }
-  }
-
-  useEffect(() => {
-    if(isAuthenticated){
-      route.push("/login")
-    }
-  }, [isAuthenticated])
+  };
 
   const handleInputChange = (
     field: string,
@@ -151,9 +156,7 @@ export default function SignUpForm() {
         <div className="max-w-lg mx-auto w-full pt-8 lg:pt-20">
           {/* Header */}
           <div className="mb-8 w-full mx-auto text-center">
-            <h1 className="text-2xl font-bold mb-2">
-              Create your account
-            </h1>
+            <h1 className="text-2xl font-bold mb-2">Create your account</h1>
             <p className="text-gray-600">Join our fellowship community</p>
           </div>
 
@@ -189,14 +192,29 @@ export default function SignUpForm() {
               <Label htmlFor="password" className="text-gray-700 font-medium">
                 Password*
               </Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                value={formData.password}
-                onChange={(e) => handleInputChange("password", e.target.value)}
-                className="mt-1 h-12 border-gray-300"
-              />
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={(e) =>
+                    handleInputChange("password", e.target.value)
+                  }
+                  className="mt-1 h-12 border-gray-300 pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
             </div>
 
             {/* Department and Year of Study - Side by Side */}
@@ -240,10 +258,7 @@ export default function SignUpForm() {
 
               {/* Year of Study Field */}
               <div>
-                <Label
-                  htmlFor="yearOfStudy"
-                  className=" font-medium"
-                >
+                <Label htmlFor="yearOfStudy" className=" font-medium">
                   Year of Study*
                 </Label>
                 <Select
@@ -285,7 +300,7 @@ export default function SignUpForm() {
               type="submit"
               className="w-full h-12 bg-primary hover:bg-primary/80 text-white font-medium mt-6"
             >
-              Sign Up
+              {isLoading ? <Loader /> : "Sign Up"}
             </Button>
           </form>
 

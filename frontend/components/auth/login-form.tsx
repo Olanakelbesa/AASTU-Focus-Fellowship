@@ -18,18 +18,36 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { loginRequest } from "@/lib/redux/authSlice";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const user = useSelector(selectUser);
   const error = useSelector(selectAuthError);
-  const loading = useSelector(selectAuthLoading)
+  const loading = useSelector(selectAuthLoading);
 
-  const route = useRouter()
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      // Check if there's a redirect parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectTo = urlParams.get("redirect");
+
+      if (redirectTo) {
+        router.push(redirectTo);
+      } else if (user.role === "admin") {
+        router.push("/admin");
+      } else {
+        router.push("/");
+      }
+    }
+  }, [isAuthenticated, user, router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,12 +58,6 @@ export default function LoginForm() {
       ErrorHandler.handleReduxError(error as string, "LOGIN");
     }
   };
-
-  useEffect(() => {
-    if(isAuthenticated){
-      route.push("/")
-    }
-  }, [isAuthenticated]);
 
   return (
     <div className="min-h-screen grid lg:grid-cols-2 relative">
@@ -67,9 +79,7 @@ export default function LoginForm() {
         <div className="max-w-md mx-auto w-full">
           {/* Header */}
           <div className="mb-8 w-full mx-auto text-center">
-            <h1 className="text-2xl font-bold  mb-2">
-              Welcome back
-            </h1>
+            <h1 className="text-2xl font-bold  mb-2">Welcome back</h1>
             <p className="text-gray-600">Sign in to your account</p>
           </div>
 
@@ -90,17 +100,30 @@ export default function LoginForm() {
             </div>
 
             <div>
-              <Label htmlFor="password" className=" font-medium">
+              <Label htmlFor="password" className="text-gray-700 font-medium">
                 Password*
               </Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 h-12"
-              />
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="mt-1 h-12 border-gray-300 pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
             </div>
 
             {/* Remember me checkbox */}

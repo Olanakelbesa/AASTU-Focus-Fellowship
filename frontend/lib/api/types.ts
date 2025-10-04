@@ -28,9 +28,9 @@ export interface RegisterRequest {
   name: string;
   email: string;
   password: string;
-  department?: string;
-  yearOfStudy?: string;
-  phone?: string;
+  department: string;
+  yearOfStudy: string;
+  phone: string;
 }
 
 export interface AuthResponse {

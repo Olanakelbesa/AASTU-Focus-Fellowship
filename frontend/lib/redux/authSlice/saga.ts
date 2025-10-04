@@ -16,8 +16,8 @@ import { UserType } from "./types";
 import { SagaIterator } from "redux-saga";
 import makeCall from "@/lib/api/makeCall";
 import { apiRoutes } from "@/lib/api";
-import { RegisterPayload, LoginPayload } from "./types"
-
+import { RegisterPayload, LoginPayload } from "./types";
+import { ToastService } from "@/lib/services/toastService";
 
 // Util for storing/removing token/user in localStorage
 const persistAuth = (user: UserType | null, token: string | null) => {
@@ -42,11 +42,25 @@ function* loginSaga(action: {
       body: action.payload,
       isSecureRoute: false,
     });
+    if (response.success) {
+      ToastService.success(response.message);
+    }
+
+    // Check if login response contains user data and tokens
+    if (!response.data?.user || !response.data?.token) {
+      throw new Error("Invalid login response");
+    }
+
     const { user, token } = response.data;
     yield put(loginSuccess({ user, token }));
     persistAuth(user, token);
   } catch (error: any) {
-    yield put(loginFailure(error.response?.data?.message || error.message));
+    ToastService.error(error.message);
+    yield put(
+      loginFailure(
+        error?.message || "Login failed"
+      )
+    );
     persistAuth(null, null);
   }
 }
@@ -63,7 +77,6 @@ function* registerSaga(action: {
       body: action.payload,
       isSecureRoute: false,
     });
-    console.log("respons", response)
     const { user, token } = response.data;
     yield put(registerSuccess({ user, token }));
     persistAuth(user, token);

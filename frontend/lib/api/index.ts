@@ -112,7 +112,7 @@ const auth = {
   login: `${BASE_URL}/${bases.auth}/login`,
   register: `${BASE_URL}/${bases.auth}/register`,
   registerAdmin: `${BASE_URL}/${bases.auth}/register/admin`,
-  refreshToken: `${BASE_URL}/${bases.auth}/refresh`,
+  refreshToken: `${BASE_URL}/${bases.auth}/refresh-token`,
   logout: `${BASE_URL}/${bases.auth}/logout`,
 };
 

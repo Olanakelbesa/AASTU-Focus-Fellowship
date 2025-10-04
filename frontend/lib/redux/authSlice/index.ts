@@ -5,6 +5,7 @@ const initialState: AuthState = {
   user: null,
   token: null,
   isAuthenticated: false,
+  isRegistered: false,
   loading: false,
   error: null,
 };
@@ -50,7 +51,8 @@ const authSlice = createSlice({
     registerSuccess(state, action: PayloadAction<{ user: UserType; token: string }>) {
       state.user = action.payload.user;
       state.token = action.payload.token;
-      state.isAuthenticated = true;
+      state.isAuthenticated = false;
+      state.isRegistered = true;
       state.loading = false;
       state.error = null;
     },
