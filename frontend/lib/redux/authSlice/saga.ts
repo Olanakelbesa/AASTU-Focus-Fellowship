@@ -11,6 +11,7 @@ import {
   refreshTokenFailure,
   logout,
   setUser,
+  googleRequest,
 } from "./index";
 import { UserType } from "./types";
 import { SagaIterator } from "redux-saga";
@@ -42,11 +43,12 @@ function* loginSaga(action: {
       body: action.payload,
       isSecureRoute: false,
     });
+
     if (response.success) {
-      ToastService.success(response.message);
+      ToastService.success(response.message || "Login successful!");
     }
 
-    // Check if login response contains user data and tokens
+    // Validate response
     if (!response.data?.user || !response.data?.token) {
       throw new Error("Invalid login response");
     }
@@ -55,12 +57,12 @@ function* loginSaga(action: {
     yield put(loginSuccess({ user, token }));
     persistAuth(user, token);
   } catch (error: any) {
-    ToastService.error(error.message);
-    yield put(
-      loginFailure(
-        error?.message || "Login failed"
-      )
-    );
+    const errorMessage =
+      error?.message ||
+      "Login failed";
+
+    ToastService.error(errorMessage);
+    yield put(loginFailure(error?.message || "Login failed"));
     persistAuth(null, null);
   }
 }
@@ -77,11 +79,19 @@ function* registerSaga(action: {
       body: action.payload,
       isSecureRoute: false,
     });
+
+    if (response.success) {
+      ToastService.success(response.message || "Registration successful!");
+    }
+
     const { user, token } = response.data;
     yield put(registerSuccess({ user, token }));
     persistAuth(user, token);
   } catch (error: any) {
-    yield put(registerFailure(error.response?.data?.message || error.message));
+    ToastService.error(
+      error?.response?.data?.message || error.message || "Registration failed"
+    );
+    yield put(registerFailure(error?.response?.data?.message || error.message));
     persistAuth(null, null);
   }
 }
@@ -94,29 +104,50 @@ function* refreshTokenSaga(): SagaIterator {
       method: "POST",
       isSecureRoute: true,
     });
+
     const token = response.data?.data?.token || response.data?.token;
     yield put(refreshTokenSuccess(token));
     localStorage.setItem("auth_token", token);
+    ToastService.success("Session refreshed successfully!");
   } catch (error: any) {
+    ToastService.error(
+      error?.response?.data?.message ||
+        error.message ||
+        "Session refresh failed"
+    );
     yield put(
-      refreshTokenFailure(
-        (error.response?.data as any)?.message || error.message
-      )
+      refreshTokenFailure(error?.response?.data?.message || error.message)
     );
     persistAuth(null, null);
   }
 }
 
 // Logout Saga
-function* logoutSaga() {
+function* logoutSaga(): SagaIterator {
   try {
-    yield call(makeCall, {
+    const response = yield call(makeCall, {
       route: apiRoutes.auth.logout,
       method: "POST",
       isSecureRoute: true,
     });
+
+    if (response.success) {
+      ToastService.success(response.message || "Logged out successfully!");
+    }
+  } catch (error: any) {
+    ToastService.error(
+      error?.response?.data?.message || error.message || "Logout failed"
+    );
   } finally {
     persistAuth(null, null);
+  }
+}
+
+function* googleSaga(): SagaIterator {
+  try {
+    ToastService.success("Rediredting to Google...");
+  } catch (error: any) {
+    ToastService.error(error?.message || "Google auth failed")
   }
 }
 
@@ -124,6 +155,7 @@ function* logoutSaga() {
 function* initializeAuthSaga() {
   const userStr = localStorage.getItem("auth_user");
   const token = localStorage.getItem("auth_token");
+
   if (userStr && token) {
     const user = JSON.parse(userStr) as UserType;
     yield put(setUser(user));
@@ -139,5 +171,5 @@ export default function* authSaga() {
   yield takeLatest(registerRequest.type, registerSaga);
   yield takeLatest(refreshTokenRequest.type, refreshTokenSaga);
   yield takeLatest(logout.type, logoutSaga);
-  // Optionally, add takeLatest for initializeAuthSaga if you trigger it on app start
+  yield takeLatest(googleRequest.type, googleSaga);
 }

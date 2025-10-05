@@ -42,6 +42,7 @@ export class ToastService {
 
   static error(message: string, title?: string) {
     return this.show({
+      title: title,
       description: message,
       type: "error",
     });

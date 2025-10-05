@@ -34,6 +34,12 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
     },
 
+    // Google login
+    googleRequest(state) {
+      state.loading = true;
+      state.error = null;
+    },
+
     // Logout
     logout(state) {
       state.user = null;
@@ -106,6 +112,7 @@ export const {
   refreshTokenFailure,
   setUser,
   setError,
+  googleRequest,
 } = authSlice.actions;
 
 export default authSlice.reducer;

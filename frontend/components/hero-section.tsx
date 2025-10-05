@@ -302,60 +302,6 @@ export default function HeroSection({
         </div>
       </div>
 
-      {/* <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-20 left-10 w-8 h-8 bg-gradient-to-r from-primary to-primary/80 rounded-full shadow-lg"
-          animate={{
-            y: [0, -20, 0],
-            opacity: [0.4, 0.8, 0.4],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute top-40 right-32 w-6 h-6 bg-gradient-to-r from-primary/80 to-primary/60 rounded-full shadow-lg"
-          animate={{
-            y: [0, 30, 0],
-            opacity: [0.5, 0.9, 0.5],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1,
-          }}
-        />
-        <motion.div
-          className="absolute bottom-32 left-32 w-3 h-3 bg-gradient-to-r from-primary/70 to-primary/50 rounded-full shadow-lg"
-          animate={{
-            y: [0, -25, 0],
-            opacity: [0.3, 0.7, 0.3],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2,
-          }}
-        />
-        <motion.div
-          className="absolute top-1/2 right-10 w-2 h-2 bg-gradient-to-r from-primary/90 to-primary/70 rounded-full shadow-lg"
-          animate={{
-            y: [0, 15, 0],
-            opacity: [0.4, 0.8, 0.4],
-          }}
-          transition={{
-            duration: 4.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 0.5,
-          }}
-        />
-      </div> */}
-
       <div className="px-5 mx-auto relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
           {/* Text Section */}
@@ -397,7 +343,7 @@ export default function HeroSection({
               <Button
                 onClick={onSecondaryClick}
                 variant="outline"
-                className="px-8 py-3 text-lg font-medium rounded-lg transition-all duration-300 bg-transparent hover:scale-105 hover:shadow-md transform active:scale-95 hover:border-foreground text-primary border-primary hover:text-foreground"
+                className="px-8 py-3 text-lg font-medium rounded-lg transition-all duration-300 bg-transparent hover:scale-105 hover:shadow-md transform active:scale-95 text-primary border-primary"
               >
                 {secondaryButtonText}
               </Button>
@@ -446,8 +392,6 @@ export default function HeroSection({
             <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-gradient-to-r from-primary/50 to-primary/30 rounded-full opacity-70 blur-xl animate-float shadow-lg"></div>
             <div className="absolute top-1/2 -right-6 w-16 h-16 bg-gradient-to-r from-primary/70 to-primary/50 rounded-full opacity-70 blur-lg animate-bounce shadow-lg"></div>
 
-            {/* Subtle glow effect around the image grid */}
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 blur-sm animate-pulse opacity-80 pointer-events-none"></div>
           </motion.div>
         </div>
       </div>
