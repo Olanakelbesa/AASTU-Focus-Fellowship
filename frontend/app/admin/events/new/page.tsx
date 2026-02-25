@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -23,45 +23,97 @@ import {
   Calendar,
   Clock,
   MapPin,
-  Cross,
   X,
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectEventsError,
+  selectEventsLoading,
+} from "@/lib/redux/eventSlice/selector";
+import { createEventRequest } from "@/lib/redux/eventSlice";
+import {
+  CreateEventPayload,
+  EventCategory,
+} from "@/lib/redux/eventSlice/types";
 
 export default function NewEventPage() {
+  const prevLoadingRef = useRef(false);
+
+  const dispatch = useDispatch();
   const router = useRouter();
+
+  const loading = useSelector(selectEventsLoading);
+  const error = useSelector(selectEventsError);
+
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [event, setEvent] = useState({
+
+  const [event, setEvent] = useState<
+    Omit<CreateEventPayload, "image"> & { endTime?: string }
+  >({
     title: "",
     description: "",
     date: "",
-    time: "",
+    startTime: "",
+    endTime: "",
     location: "",
-    category: "bible_study",
-    maxAttendees: "",
-    registrationRequired: true,
-    status: "draft",
-    featured: false,
-    allowComments: true,
-    tags: "",
-    metaDescription: "",
+    category: "bible_study" as EventCategory,
+    maxAttendees: null,
+    isActive: false,
+    isPublic: false,
+    tags: [],
   });
+
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-
-  const handleSave = (status: "draft" | "published") => {
-    // In real app, this would save to API
-    console.log("Saving event:", { ...event, status });
-    toast({
-      title: "Event saved",
-      description: `Event has been saved as ${status}.`,
-    });
-    router.push("/admin/events");
-  };
 
   const handleInputChange = (field: string, value: any) => {
     setEvent((prev) => ({ ...prev, [field]: value }));
   };
+
+  const handleSave = (status: "draft" | "published") => {
+    const payload: CreateEventPayload = {
+      ...event,
+      isActive: status === "published",
+      isPublic: status === "published",
+    };
+
+    // Use FormData if there is an image
+    if (image) {
+      const formData = new FormData();
+      Object.entries(payload).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          if (Array.isArray(value)) {
+            value.forEach((v) => formData.append(`${key}[]`, v));
+          } else {
+            formData.append(key, value.toString());
+          }
+        }
+      });
+      formData.append("image", image);
+      dispatch(createEventRequest(formData));
+    } else {
+      dispatch(createEventRequest(payload));
+    }
+
+    toast({
+      description: "Saving event...",
+    });
+  };
+
+  useEffect(() => {
+    if (prevLoadingRef.current && !loading) {
+      if (!error) {
+        router.push("/admin/events");
+      } else {
+        toast({
+          description: error,
+          variant: "destructive",
+        });
+      }
+    }
+    prevLoadingRef.current = loading;
+  }, [loading, error, router]);
 
   return (
     <div className="space-y-6">
@@ -119,6 +171,65 @@ export default function NewEventPage() {
                 />
               </div>
 
+              <div className="space-y-2">
+                <Label htmlFor="eventImage">Event Image</Label>
+                <div className="border-2 border-dashed border-muted-foreground rounded-lg p-8 text-center">
+                  {imagePreview ? (
+                    <div className="mb-4 flex flex-col items-center gap-2">
+                      <div className="relative inline-block">
+                        <img
+                          src={imagePreview}
+                          alt="Event Preview"
+                          className="mx-auto mb-2 rounded-lg object-cover max-h-48"
+                        />
+                        <Button
+                          size="icon"
+                          variant="destructive"
+                          className="absolute -top-2 -right-2 z-10 rounded-full p-1 h-7 w-7 flex items-center justify-center"
+                          onClick={() => {
+                            setImage(null);
+                            setImagePreview(null);
+                          }}
+                          aria-label="Remove Image"
+                        >
+                          <X className="h-2 w-2" />
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <Upload className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Upload event image
+                      </p>
+                    </>
+                  )}
+
+                  <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setImage(file);
+                        setImagePreview(URL.createObjectURL(file));
+                      }
+                    }}
+                  />
+                  {!imagePreview && (
+                    <Button
+                      variant="outline"
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      Choose File
+                    </Button>
+                  )}
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="date">Date</Label>
@@ -137,15 +248,31 @@ export default function NewEventPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="time">Time</Label>
+                  <Label htmlFor="startTime">Start Time</Label>
                   <div className="relative">
                     <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
-                      id="time"
+                      id="startTime"
                       type="time"
-                      value={event.time}
+                      value={event.startTime}
                       onChange={(e) =>
-                        handleInputChange("time", e.target.value)
+                        handleInputChange("startTime", e.target.value)
+                      }
+                      className="pl-10"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="endTime">End Time</Label>
+                  <div className="relative">
+                    <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="endTime"
+                      type="time"
+                      value={event.endTime}
+                      onChange={(e) =>
+                        handleInputChange("endTime", e.target.value)
                       }
                       className="pl-10"
                     />
@@ -194,9 +321,11 @@ export default function NewEventPage() {
                     <SelectItem value="bible_study">Bible Study</SelectItem>
                     <SelectItem value="worship">Worship Night</SelectItem>
                     <SelectItem value="outreach">Community Outreach</SelectItem>
-                    <SelectItem value="retreat">Retreat</SelectItem>
                     <SelectItem value="prayer">Prayer Meeting</SelectItem>
-                    <SelectItem value="social">Social Event</SelectItem>
+                    <SelectItem value="fellowship">Fellowship</SelectItem>
+                    <SelectItem value="break_mission">Break Mission</SelectItem>
+                    <SelectItem value="training">Training</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -206,9 +335,9 @@ export default function NewEventPage() {
                 <Input
                   id="maxAttendees"
                   type="number"
-                  value={event.maxAttendees}
+                  value={event.maxAttendees ?? ""}
                   onChange={(e) =>
-                    handleInputChange("maxAttendees", e.target.value)
+                    handleInputChange("maxAttendees", Number(e.target.value))
                   }
                   placeholder="Leave empty for unlimited"
                 />
@@ -220,9 +349,9 @@ export default function NewEventPage() {
                 </Label>
                 <Switch
                   id="registrationRequired"
-                  checked={event.registrationRequired}
+                  checked={event.isPublic}
                   onCheckedChange={(checked) =>
-                    handleInputChange("registrationRequired", checked)
+                    handleInputChange("isPublic", checked)
                   }
                 />
               </div>
@@ -231,74 +360,11 @@ export default function NewEventPage() {
                 <Label htmlFor="featured">Featured Event</Label>
                 <Switch
                   id="featured"
-                  checked={event.featured}
+                  checked={event.isActive}
                   onCheckedChange={(checked) =>
-                    handleInputChange("featured", checked)
+                    handleInputChange("isActive", checked)
                   }
                 />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Event Image</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="border-2 border-dashed border-muted-foreground rounded-lg p-8 text-center">
-                {imagePreview ? (
-                  <div className="mb-4 flex flex-col items-center gap-2">
-                    <div className="relative inline-block">
-                      <img
-                        src={imagePreview}
-                        alt="Event Preview"
-                        className="mx-auto mb-2 rounded-lg object-cover max-h-48"
-                      />
-                      <Button
-                        size="icon"
-                        variant="destructive"
-                        className="absolute -top-2 -right-2 z-10 rounded-full p-1 h-7 w-7 flex items-center justify-center"
-                        onClick={() => {
-                          setImage(null);
-                          setImagePreview(null);
-                        }}
-                        aria-label="Remove Image"
-                      >
-                        <X className="h-2 w-2" />
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    <Upload className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Upload event image
-                    </p>
-                  </>
-                )}
-                {/* Hidden file input */}
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) {
-                      setImage(file);
-                      const url = URL.createObjectURL(file);
-                      setImagePreview(url);
-                    }
-                  }}
-                />
-                {!imagePreview && (
-                  <Button
-                    variant="outline"
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    Choose File
-                  </Button>
-                )}
               </div>
             </CardContent>
           </Card>

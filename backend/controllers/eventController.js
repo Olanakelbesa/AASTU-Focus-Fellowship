@@ -5,10 +5,30 @@ import User from '../models/User.js';
 
 // Create new event
 export const createEvent = asyncHandler(async (req, res) => {
+
+  if(!req.body) {
+    throw new AppError('Request body is missing', 400);
+  }
+
+  const { startTime, endTime } = req.body;
+
+  if (!startTime || !endTime) {
+    throw new AppError('Start time and end time are required', 400);
+  }
+
+  if (startTime >= endTime) {
+    throw new AppError('End time must be after start time', 400);
+  }
+
   const eventData = {
     ...req.body,
     createdBy: req.user._id
   };
+
+  if(req.file) {
+    eventData.image = `/uploads/${req.file.filename}`
+  }
+
 
   // Check if end time is after start time
   if (req.body.startTime >= req.body.endTime) {

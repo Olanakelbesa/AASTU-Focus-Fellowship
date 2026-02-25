@@ -4,7 +4,7 @@ dotenv.config();
 
 const config = {
     NODE_ENV: process.env.NODE_ENV || 'development',
-    PORT: process.env.PORT || 5000,
+    PORT: process.env.PORT || 5002,
     MONGODB_URI: process.env.MONGODB_URI,
     JWT_SECRET: process.env.JWT_SECRET || (process.env.NODE_ENV === 'development' ? 'development_secret' : null),
     JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '1h',  // Shorter default for security
