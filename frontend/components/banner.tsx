@@ -9,7 +9,7 @@ interface BannerProps {
 
 export function Banner({ title, subTitle }: BannerProps) {
   return (
-    <div className="relative min-h-[300px] md:min-h-[400px] lg:min-h-[500px] overflow-hidden banner-bg">
+    <div className="relative min-h-[300px] md:min-h-[400px] lg:min-h-[600px] overflow-hidden banner-bg">
       {/* Geometric background shapes - hidden on mobile */}
       <div className="absolute inset-0 hidden md:block">
         {/* Large primary shape - top right */}

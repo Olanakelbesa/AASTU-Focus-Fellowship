@@ -6,8 +6,8 @@ import { FaTelegramPlane, FaTiktok } from "react-icons/fa";
 
 export function Footer() {
   return (
-    <footer className="bg-[#e3dad1] py-12 border-t">
-      <div className="container px-4 md:px-6">
+    <footer className="bg-[#e3dad1] dark:bg-background py-12 w-full">
+      <div className=" px-4 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <Link href="/" className="font-bold text-xl flex items-center">
@@ -159,7 +159,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-xs text-muted-foreground">
             &copy; {new Date().getFullYear()} AASTU FOCUS Fellowship. All rights
             reserved.

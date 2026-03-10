@@ -1,6 +1,6 @@
 // API Configuration and Base Setup
 export const API_CONFIG = {
-  BASE_URL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5002/api",
+  BASE_URL: process.env.NEXT_PUBLIC_API || "http://localhost:5002/api",
   TIMEOUT: 10000, // 10 seconds
   RETRY_ATTEMPTS: 3,
   RETRY_DELAY: 1000, // 1 second
@@ -112,7 +112,7 @@ const auth = {
   login: `${BASE_URL}/${bases.auth}/login`,
   register: `${BASE_URL}/${bases.auth}/register`,
   registerAdmin: `${BASE_URL}/${bases.auth}/register/admin`,
-  refreshToken: `${BASE_URL}/${bases.auth}/refresh`,
+  refreshToken: `${BASE_URL}/${bases.auth}/refresh-token`,
   logout: `${BASE_URL}/${bases.auth}/logout`,
 };
 

@@ -87,7 +87,10 @@ export const registerAdmin = asyncHandler(async (req, res) => {
 export const login = (req, res, next) => {
   passport.authenticate('local', { session: false }, async (err, user) => {
     if (err || !user) {
-      return res.status(401).json({ success: false, message: 'Invalid credentials' });
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Authentication failed' 
+      });
     }
 
     try {
@@ -112,7 +115,8 @@ export const login = (req, res, next) => {
           success: true,
           message: 'Login successful',
           data: {
-            user: { _id: user._id, name: user.name, email: user.email, role: user.role }
+            user: { _id: user._id, name: user.name, email: user.email, role: user.role, department: user.department, yearOfStudy: user.yearOfStudy, phone: user.phone, isActive: user.isActive, lastLogin: user.lastLogin, createdAt: user.createdAt, updatedAt: user.updatedAt, avatar: user.avatar },
+            token: access
           }
         });
     } catch (e) {
@@ -148,7 +152,13 @@ export const refreshToken = asyncHandler(async (req, res) => {
   res
     .cookie('access_token', access, { ...commonCookie, maxAge: 15 * 60 * 1000 })
     .cookie('refresh_token', newRefresh, { ...commonCookie, maxAge: 30 * 24 * 60 * 60 * 1000 })
-    .json({ success: true, message: 'Token refreshed' });
+    .json({ 
+      success: true, 
+      message: 'Token refreshed',
+      data: {
+        token: access
+      }
+    });
 });
 
 // logout

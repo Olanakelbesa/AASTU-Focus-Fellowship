@@ -1,5 +1,6 @@
 import express from 'express';
 import { requireAuth, requireLeader, verifyJWT } from '../middleware/auth.js';
+import  upload  from "../middleware/upload.js";
 import {
   createEvent,
   getAllEvents,
@@ -29,7 +30,7 @@ router.get('/user/registered', getUserEvents);
 router.post('/register', validateRequest(eventRegistrationSchema), registerForEvent);
 router.post('/cancel', validateRequest(eventRegistrationSchema), cancelEventRegistration);
 
-router.post('/', requireLeader, validateRequest(createEventSchema), createEvent);
+router.post('/', requireLeader, validateRequest(createEventSchema), upload.single("image"), createEvent);
 router.put('/:id', requireLeader, validateRequest(updateEventSchema), updateEvent);
 router.delete('/:id', requireLeader, deleteEvent);
 router.post('/attendance', requireLeader, markAttendance);

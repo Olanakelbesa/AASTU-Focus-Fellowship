@@ -16,20 +16,47 @@ import {
   selectUser,
 } from "@/lib/redux/authSlice/selector";
 import { useDispatch, useSelector } from "react-redux";
-import { loginRequest } from "@/lib/redux/authSlice";
+import { googleRequest, loginRequest } from "@/lib/redux/authSlice";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const user = useSelector(selectUser);
   const error = useSelector(selectAuthError);
-  const loading = useSelector(selectAuthLoading)
+  const loading = useSelector(selectAuthLoading);
 
-  const route = useRouter()
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      // Check if there's a redirect parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectTo = urlParams.get("redirect");
+
+      if (redirectTo) {
+        router.push(redirectTo);
+      } else if (user.role === "admin") {
+        router.push("/admin");
+      } else {
+        router.push("/");
+      }
+    }
+  }, [isAuthenticated, user, router]);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const authStatus = urlParams.get("auth");
+
+    if (authStatus === "success") {
+      router.push("/");
+    }
+  }, [router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,23 +68,19 @@ export default function LoginForm() {
     }
   };
 
-  useEffect(() => {
-    if(isAuthenticated){
-      route.push("/")
-    }
-  }, [isAuthenticated]);
+  const handleGoogleAuth = () => {
+    const base = process.env.NEXT_PUBLIC_API || "http://localhost:5002/api";
+    window.location.href = `${base}/auth/google`;
+  };
 
   return (
     <div className="min-h-screen grid lg:grid-cols-2 relative">
       {/* Logo - Top Left Corner */}
       <div className="absolute top-4 left-10 z-20">
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-xl font-bold text-gray-900"
-        >
+        <Link href="/" className="flex items-center gap-2 text-xl font-bold ">
           <div className="flex ">
             <span className="text-primary-gradient mr-1">AASTU</span>{" "}
-            <span>FOCUS</span>
+            <span className="">FOCUS</span>
           </div>
         </Link>
       </div>
@@ -67,10 +90,8 @@ export default function LoginForm() {
         <div className="max-w-md mx-auto w-full">
           {/* Header */}
           <div className="mb-8 w-full mx-auto text-center">
-            <h1 className="text-2xl font-bold  mb-2">
-              Welcome back
-            </h1>
-            <p className="text-gray-600">Sign in to your account</p>
+            <h1 className="text-2xl font-bold  mb-2">Welcome back</h1>
+            <p className="text-gray-400">Sign in to your account</p>
           </div>
 
           {/* Form */}
@@ -85,29 +106,43 @@ export default function LoginForm() {
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 h-12"
               />
             </div>
 
             <div>
-              <Label htmlFor="password" className=" font-medium">
+              <Label htmlFor="password" className="font-medium">
                 Password*
               </Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 h-12"
-              />
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
             </div>
 
             {/* Remember me checkbox */}
             <div className="flex items-center justify-between pt-2">
               <div className="flex items-center space-x-2">
                 <Checkbox id="remember" className="mt-0.5" />
-                <Label htmlFor="remember" className="text-sm text-gray-600">
+                <Label
+                  htmlFor="remember"
+                  className="text-sm text-muted-foreground "
+                >
                   Remember me
                 </Label>
               </div>
@@ -141,15 +176,16 @@ export default function LoginForm() {
           {/* Google Sign In */}
           <Button
             variant="outline"
-            className="w-full mb-6 h-12 text-gray-700 border-gray-300 hover:bg-gray-50 bg-transparent"
+            className="w-full mb-6 h-12 border-muted-foreground  hover:bg-card bg-transparent"
             type="button"
+            onClick={handleGoogleAuth}
           >
             <GoogleIcon />
             Login with Google
           </Button>
 
           {/* Sign up link */}
-          <p className="text-center text-sm text-gray-600 mt-6">
+          <p className="text-center text-sm text-muted-foreground  mt-6">
             Don't have an account?{" "}
             <Link
               href="/signup"

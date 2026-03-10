@@ -24,19 +24,16 @@ router.post("/refresh-token", refreshToken);
 router.post("/logout", logout);
 
 // google
-// Google OAuth initiation - adds state for CSRF protection
 router.get(
   "/google",
   (req, res, next) => {
-    // Generate and store state for CSRF protection
     const state = crypto.randomBytes(32).toString('hex');
     req.session.googleOAuthState = state;
-    next();
-  },
-  passport.authenticate("google", { 
-    scope: ["profile", "email"],
-    state: (req) => req.session.googleOAuthState
-  })
+    return passport.authenticate("google", {
+      scope: ["profile", "email"],
+      state,
+    })(req, res, next);
+  }
 );
 
 router.get(
@@ -46,6 +43,20 @@ router.get(
   }),
   async (req, res) => {
     try {
+      // Verify CSRF state parameter
+      const stateFromRequest = req.query.state;
+      const stateFromSession = req.session?.googleOAuthState;
+      const isProduction = process.env.NODE_ENV === 'production';
+
+      if (
+        isProduction && (
+          !stateFromRequest || !stateFromSession || stateFromRequest !== stateFromSession
+        )
+      ) {
+        console.error('Google OAuth: Invalid CSRF state parameter');
+        return res.redirect(`${process.env.CLIENT_URL || "http://localhost:3000"}?auth=csrf_failed`);
+      }
+
       // Validate req.user exists
       if (!req.user) {
         console.error('Google OAuth: No user in request');
@@ -57,7 +68,6 @@ router.get(
       const refresh = generateRefreshToken();
       await persistRefreshToken(req.user._id, refresh);
 
-      const isProduction = process.env.NODE_ENV === 'production';
       const commonCookie = {
         httpOnly: true,
         secure: isProduction,
@@ -68,11 +78,11 @@ router.get(
       res
         .cookie('access_token', access, { ...commonCookie, maxAge: 15 * 60 * 1000 })
         .cookie('refresh_token', refresh, { ...commonCookie, maxAge: 30 * 24 * 60 * 60 * 1000 })
-        .redirect(`${process.env.CLIENT_URL || "http://localhost:3000"}?auth=success`);
+        .redirect(`${process.env.CLIENT_URL || "http://localhost:3000"}/auth/callback?auth=success`);
     } catch (error) {
       console.error('Google auth callback error:', error);
       const clientUrl = process.env.CLIENT_URL || "http://localhost:3000";
-      res.redirect(`${clientUrl}?auth=error`);
+      res.redirect(`${clientUrl}/auth/callback?auth=error`);
     } finally {
       // Clean up session
       if (req.session) {

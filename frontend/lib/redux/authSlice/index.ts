@@ -5,6 +5,7 @@ const initialState: AuthState = {
   user: null,
   token: null,
   isAuthenticated: false,
+  isRegistered: false,
   loading: false,
   error: null,
 };
@@ -33,6 +34,12 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
     },
 
+    // Google login
+    googleRequest(state) {
+      state.loading = true;
+      state.error = null;
+    },
+
     // Logout
     logout(state) {
       state.user = null;
@@ -50,7 +57,8 @@ const authSlice = createSlice({
     registerSuccess(state, action: PayloadAction<{ user: UserType; token: string }>) {
       state.user = action.payload.user;
       state.token = action.payload.token;
-      state.isAuthenticated = true;
+      state.isAuthenticated = false;
+      state.isRegistered = true;
       state.loading = false;
       state.error = null;
     },
@@ -104,6 +112,7 @@ export const {
   refreshTokenFailure,
   setUser,
   setError,
+  googleRequest,
 } = authSlice.actions;
 
 export default authSlice.reducer;

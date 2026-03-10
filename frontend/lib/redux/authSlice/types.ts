@@ -18,6 +18,7 @@ export interface UserType {
     user: UserType | null;
     token: string | null;
     isAuthenticated: boolean;
+    isRegistered: boolean;
     loading: boolean;
     error: string | null;
   }

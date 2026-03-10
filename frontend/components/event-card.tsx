@@ -28,7 +28,7 @@ export default function EventCard({
 }: EventCardProps) {
   return (
     <ScaleOnHover scale={1.03}>
-      <Card className="border-gray-50 overflow-hidden h-full transition-shadow duration-300 hover:shadow-lg dark-mode-transition">
+      <Card className="border-gray-300 dark:border-gray-500 bg-background overflow-hidden h-full transition-shadow duration-300 hover:shadow-lg dark-mode-transition">
         <div className="relative h-48 w-full overflow-hidden">
           <Image
             src={imageSrc || "/placeholder.svg"}
@@ -52,7 +52,7 @@ export default function EventCard({
         <CardFooter className="px-6 pb-6 pt-0">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full hover:border-primary/60">
                 Learn More
               </Button>
             </DialogTrigger>

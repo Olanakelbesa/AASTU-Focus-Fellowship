@@ -61,6 +61,8 @@ export const createEventSchema = Joi.object({
     .optional(),
   isPublic: Joi.boolean()
     .default(true),
+  isActive: Joi.boolean()
+    .default(true),
   tags: Joi.array()
     .items(Joi.string().max(20))
     .max(10)

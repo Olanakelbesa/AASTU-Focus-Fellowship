@@ -1,13 +1,20 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,105 +22,115 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Search, MoreHorizontal, CalendarPlus, Edit, Trash2, Eye, Users, Calendar, Clock } from "lucide-react"
+} from "@/components/ui/dropdown-menu";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Search,
+  MoreHorizontal,
+  CalendarPlus,
+  Edit,
+  Trash2,
+  Eye,
+  Users,
+  Calendar,
+  Clock,
+} from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectEvents,
+  selectEventsError,
+  selectEventsLoading,
+} from "@/lib/redux/eventSlice/selector";
+import { fetchEventsRequest } from "@/lib/redux/eventSlice";
 
 export default function EventsPage() {
-  const [searchTerm, setSearchTerm] = useState("")
+  const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [category, setCategory] = useState("");
 
-  // Mock events data
-  const events = [
-    {
-      id: 1,
-      title: "Weekly Bible Study",
-      description: "Join us as we study the Book of John",
-      date: "2024-03-20",
-      time: "6:00 PM",
-      location: "Main Campus, Room 201",
-      category: "bible_study",
-      status: "published",
-      registrations: 25,
-      maxAttendees: 50,
-      image: "/placeholder.svg?height=100&width=150",
-    },
-    {
-      id: 2,
-      title: "Worship Night",
-      description: "A night of praise and worship",
-      date: "2024-03-25",
-      time: "7:00 PM",
-      location: "University Auditorium",
-      category: "worship",
-      status: "published",
-      registrations: 45,
-      maxAttendees: 100,
-      image: "/placeholder.svg?height=100&width=150",
-    },
-    {
-      id: 3,
-      title: "Community Outreach",
-      description: "Serving our local community",
-      date: "2024-04-02",
-      time: "9:00 AM",
-      location: "Local Community Center",
-      category: "outreach",
-      status: "draft",
-      registrations: 18,
-      maxAttendees: 30,
-      image: "/placeholder.svg?height=100&width=150",
-    },
-    {
-      id: 4,
-      title: "Spring Retreat",
-      description: "Weekend of spiritual renewal",
-      date: "2024-04-22",
-      time: "All Day",
-      location: "Mountain View Retreat Center",
-      category: "retreat",
-      status: "published",
-      registrations: 35,
-      maxAttendees: 60,
-      image: "/placeholder.svg?height=100&width=150",
-    },
-  ]
+  // Get events
+  const events = useSelector(selectEvents);
+  const loading = useSelector(selectEventsLoading);
+  const error = useSelector(selectEventsError);
 
-  const upcomingEvents = events.filter((event) => new Date(event.date) >= new Date())
-  const pastEvents = events.filter((event) => new Date(event.date) < new Date())
+  useEffect(() => {
+    dispatch(fetchEventsRequest());
+  }, [dispatch]);
 
-  const filteredEvents = (eventList: typeof events) =>
+  const formattedEvents = events.map((event) => ({
+    id: event._id,
+    title: event.title,
+    description: event.description,
+    date: new Date(event.date).toLocaleDateString(),
+    time: event.startTime,
+    location: event.location,
+    category: event.category,
+    status: event.isActive ? "published" : "draft",
+    registrations: event.currentAttendees,
+    maxAttendees: event.maxAttendees || 0,
+    image: event.image
+      ? `${"http://localhost:5002"}${event.image}`
+      : "/placeholder.svg",
+  }));
+
+  const upcomingEvents = formattedEvents.filter(
+    (event) => new Date(event.date) >= new Date()
+  );
+  const pastEvents = formattedEvents.filter(
+    (event) => new Date(event.date) < new Date()
+  );
+
+  const filteredEvents = (eventList: typeof formattedEvents) =>
     eventList.filter(
       (event) =>
         event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        event.description.toLowerCase().includes(searchTerm.toLowerCase()),
-    )
+        event.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   const getStatusBadgeVariant = (status: string) => {
     switch (status) {
       case "published":
-        return "default"
+        return "default";
       case "draft":
-        return "secondary"
+        return "secondary";
       case "cancelled":
-        return "destructive"
+        return "destructive";
       default:
-        return "outline"
+        return "outline";
     }
-  }
+  };
 
   const getCategoryBadgeVariant = (category: string) => {
     switch (category) {
       case "bible_study":
-        return "default"
+        return "default";
       case "worship":
-        return "secondary"
+        return "secondary";
       case "outreach":
-        return "outline"
+        return "outline";
       case "retreat":
-        return "destructive"
+        return "destructive";
       default:
-        return "outline"
+        return "outline";
     }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        Loading events...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-64 text-destructive">
+        Error: {error}
+      </div>
+    );
   }
 
   return (
@@ -122,7 +139,9 @@ export default function EventsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Event Management</h1>
-          <p className="text-muted-foreground">Create and manage fellowship events</p>
+          <p className="text-muted-foreground">
+            Create and manage fellowship events
+          </p>
         </div>
         <Button asChild>
           <Link href="/admin/events/new">
@@ -138,7 +157,7 @@ export default function EventsPage() {
           <CardContent className="p-6">
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4 text-muted-foreground" />
-              <div className="text-2xl font-bold">24</div>
+              <div className="text-2xl font-bold">{formattedEvents.length}</div>
             </div>
             <p className="text-xs text-muted-foreground">Total Events</p>
           </CardContent>
@@ -147,7 +166,7 @@ export default function EventsPage() {
           <CardContent className="p-6">
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-muted-foreground" />
-              <div className="text-2xl font-bold">8</div>
+              <div className="text-2xl font-bold">{upcomingEvents.length}</div>
             </div>
             <p className="text-xs text-muted-foreground">Upcoming</p>
           </CardContent>
@@ -156,7 +175,9 @@ export default function EventsPage() {
           <CardContent className="p-6">
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-muted-foreground" />
-              <div className="text-2xl font-bold">123</div>
+              <div className="text-2xl font-bold">
+                {formattedEvents.reduce((sum, e) => sum + e.registrations, 0)}
+              </div>
             </div>
             <p className="text-xs text-muted-foreground">Total Registrations</p>
           </CardContent>
@@ -165,7 +186,9 @@ export default function EventsPage() {
           <CardContent className="p-6">
             <div className="flex items-center gap-2">
               <Eye className="h-4 w-4 text-muted-foreground" />
-              <div className="text-2xl font-bold">3</div>
+              <div className="text-2xl font-bold">
+                {formattedEvents.filter((e) => e.status === "draft").length}
+              </div>
             </div>
             <p className="text-xs text-muted-foreground">Draft Events</p>
           </CardContent>
@@ -225,19 +248,27 @@ export default function EventsPage() {
                             </div>
                             <div>
                               <div className="font-medium">{event.title}</div>
-                              <div className="text-sm text-muted-foreground line-clamp-1">{event.description}</div>
+                              <div className="text-sm text-muted-foreground line-clamp-1">
+                                {event.description}
+                              </div>
                             </div>
                           </div>
                         </TableCell>
                         <TableCell>
                           <div className="text-sm">
                             <div>{event.date}</div>
-                            <div className="text-muted-foreground">{event.time}</div>
+                            <div className="text-muted-foreground">
+                              {event.time}
+                            </div>
                           </div>
                         </TableCell>
-                        <TableCell className="text-sm">{event.location}</TableCell>
+                        <TableCell className="text-sm">
+                          {event.location}
+                        </TableCell>
                         <TableCell>
-                          <Badge variant={getCategoryBadgeVariant(event.category)}>
+                          <Badge
+                            variant={getCategoryBadgeVariant(event.category)}
+                          >
                             {event.category.replace("_", " ")}
                           </Badge>
                         </TableCell>
@@ -247,12 +278,17 @@ export default function EventsPage() {
                               {event.registrations}/{event.maxAttendees}
                             </div>
                             <div className="text-muted-foreground">
-                              {Math.round((event.registrations / event.maxAttendees) * 100)}% full
+                              {Math.round(
+                                (event.registrations / event.maxAttendees) * 100
+                              )}
+                              % full
                             </div>
                           </div>
                         </TableCell>
                         <TableCell>
-                          <Badge variant={getStatusBadgeVariant(event.status)}>{event.status}</Badge>
+                          <Badge variant={getStatusBadgeVariant(event.status)}>
+                            {event.status}
+                          </Badge>
                         </TableCell>
                         <TableCell>
                           <DropdownMenu>
@@ -276,7 +312,9 @@ export default function EventsPage() {
                                 </Link>
                               </DropdownMenuItem>
                               <DropdownMenuItem asChild>
-                                <Link href={`/admin/events/${event.id}/attendees`}>
+                                <Link
+                                  href={`/admin/events/${event.id}/attendees`}
+                                >
                                   <Users className="h-4 w-4 mr-2" />
                                   View Attendees
                                 </Link>
@@ -323,14 +361,18 @@ export default function EventsPage() {
                             </div>
                             <div>
                               <div className="font-medium">{event.title}</div>
-                              <div className="text-sm text-muted-foreground">{event.description}</div>
+                              <div className="text-sm text-muted-foreground">
+                                {event.description}
+                              </div>
                             </div>
                           </div>
                         </TableCell>
                         <TableCell>{event.date}</TableCell>
                         <TableCell>{event.registrations} attended</TableCell>
                         <TableCell>
-                          <Badge variant={getCategoryBadgeVariant(event.category)}>
+                          <Badge
+                            variant={getCategoryBadgeVariant(event.category)}
+                          >
                             {event.category.replace("_", " ")}
                           </Badge>
                         </TableCell>
@@ -372,7 +414,7 @@ export default function EventsPage() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {events
+                    {formattedEvents
                       .filter((event) => event.status === "draft")
                       .map((event) => (
                         <TableRow key={event.id}>
@@ -388,13 +430,17 @@ export default function EventsPage() {
                               </div>
                               <div>
                                 <div className="font-medium">{event.title}</div>
-                                <div className="text-sm text-muted-foreground">{event.description}</div>
+                                <div className="text-sm text-muted-foreground">
+                                  {event.description}
+                                </div>
                               </div>
                             </div>
                           </TableCell>
                           <TableCell>{event.date}</TableCell>
                           <TableCell>
-                            <Badge variant={getCategoryBadgeVariant(event.category)}>
+                            <Badge
+                              variant={getCategoryBadgeVariant(event.category)}
+                            >
                               {event.category.replace("_", " ")}
                             </Badge>
                           </TableCell>
@@ -432,5 +478,5 @@ export default function EventsPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
